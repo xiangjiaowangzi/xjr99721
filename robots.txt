@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://xjr99721.io/sitemap.xml
