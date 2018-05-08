@@ -2,83 +2,83 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Jane - A super concise theme for Hugo</title>
-    <link>http://xiangjiaowangzi.github.io/categories/</link>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/categories/</link>
     <description>Recent content in Categories on Jane - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-	<atom:link href="http://xiangjiaowangzi.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Development</title>
-      <link>http://xiangjiaowangzi.github.io/categories/development/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/development/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/development/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/development/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Docs</title>
-      <link>http://xiangjiaowangzi.github.io/categories/docs/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/docs/</link>
       <pubDate>Tue, 06 Mar 2018 16:01:23 +0800</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/docs/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/docs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>English</title>
-      <link>http://xiangjiaowangzi.github.io/categories/english/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/english/</link>
       <pubDate>Thu, 31 Aug 2017 15:43:48 +0800</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/english/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/english/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Golang</title>
-      <link>http://xiangjiaowangzi.github.io/categories/golang/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/golang/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/golang/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/golang/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Index</title>
-      <link>http://xiangjiaowangzi.github.io/categories/index/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/index/</link>
       <pubDate>Tue, 06 Mar 2018 16:01:23 +0800</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/index/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/index/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shortcodes</title>
-      <link>http://xiangjiaowangzi.github.io/categories/shortcodes/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/shortcodes/</link>
       <pubDate>Tue, 06 Mar 2018 16:01:23 +0800</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/shortcodes/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/shortcodes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Syntax Highlighting</title>
-      <link>http://xiangjiaowangzi.github.io/categories/syntax-highlighting/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/syntax-highlighting/</link>
       <pubDate>Tue, 30 Aug 2011 16:01:23 +0800</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/syntax-highlighting/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/syntax-highlighting/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Test</title>
-      <link>http://xiangjiaowangzi.github.io/categories/test/</link>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/categories/test/</link>
       <pubDate>Wed, 30 Aug 2017 15:43:48 +0800</pubDate>
       
-      <guid>http://xiangjiaowangzi.github.io/categories/test/</guid>
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/categories/test/</guid>
       <description></description>
     </item>
     

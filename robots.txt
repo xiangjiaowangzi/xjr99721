@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://xiangjiaowangzi.github.io/sitemap.xml
+Sitemap: https://xiangjiaowangzi.github.io/xjr99721/sitemap.xml
