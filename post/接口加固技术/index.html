@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>接口加固技术 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="接口加固技术 简介 API加固的常用技术。常用的模式是加密-认证身份-鉴别权限-解密过程。 Api加固除了本身支持Https，还会额外进行上图中一" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%9B%BA%E6%8A%80%E6%9C%AF/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="接口加固技术" />
+<meta property="og:description" content="接口加固技术 简介 API加固的常用技术。常用的模式是加密-认证身份-鉴别权限-解密过程。 Api加固除了本身支持Https，还会额外进行上图中一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%9B%BA%E6%8A%80%E6%9C%AF/" />
+
+
+
+<meta property="article:published_time" content="2017-10-20T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-20T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="接口加固技术">
+<meta itemprop="description" content="接口加固技术 简介 API加固的常用技术。常用的模式是加密-认证身份-鉴别权限-解密过程。 Api加固除了本身支持Https，还会额外进行上图中一">
+
+
+<meta itemprop="datePublished" content="2017-10-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4536">
+
+
+
+<meta itemprop="keywords" content="概念,加固," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="接口加固技术"/>
+<meta name="twitter:description" content="接口加固技术 简介 API加固的常用技术。常用的模式是加密-认证身份-鉴别权限-解密过程。 Api加固除了本身支持Https，还会额外进行上图中一"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">接口加固技术</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2017-10-20 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4536 字 </span>
+        <span class="more-meta"> 预计阅读 10 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#接口加固技术">接口加固技术</a>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#https">Https</a></li>
+<li><a href="#url加密">URL加密</a></li>
+<li><a href="#参数加密">参数加密</a></li>
+<li><a href="#加入权限">加入权限</a></li>
+<li><a href="#时效验证">时效验证</a></li>
+<li><a href="#数字签名">数字签名</a></li>
+<li><a href="#对称加密">对称加密</a></li>
+<li><a href="#非对称加密">非对称加密</a></li>
+<li><a href="#数字证书">数字证书</a></li>
+<li><a href="#数字签名-1">数字签名</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="接口加固技术">接口加固技术</h1>
+
+<h2 id="简介">简介</h2>
+
+<p>API加固的常用技术。常用的模式是加密-认证身份-鉴别权限-解密过程。</p>
+
+<p><img src="http://i.imgur.com/l7k1Jnc.jpg" alt="" /></p>
+
+<p>Api加固除了本身支持Https，还会额外进行上图中一系列的加密策略，自定义对Resquest/Response Data进行加密，对url加密，甚至对request进行校验等。</p>
+
+<p>加固API主要由四种方案：</p>
+
+<ul>
+<li>使用Https</li>
+<li>URL加密</li>
+<li>参数加密</li>
+<li>加入权限</li>
+<li>时效验证</li>
+<li>数字签名</li>
+</ul>
+
+<h2 id="https">Https</h2>
+
+<p><a href="http://blog.csdn.net/sk719887916/article/details/51597816">完美支持https传输</a></p>
+
+<h2 id="url加密">URL加密</h2>
+
+<p>只针对普通get请求，不针对post表单提交及ajax方式
+策略：对于暴露在浏览器地址栏中的地址进行加密，如一个属性为name=tamic，
+假设对tamic加密后为kadfxarf24saa：
+假设真实值在这段字符中间，那么我们可以对前三位进行随机，后三位随机，
+再对真实的tamic进行加密转换（base64都行），然后再来个倒序，那么剩下的数字我们可以获取当前时间追加，最后再进行md5都行，这样普通的用户无法感知具体路径真实值是什么，甚至一般黑客都无法轻易解析具体内容，服务端拿到具体值的策略也是一样
+只要按约定的好的算法进行解码就行了。这样不仅能防止恶意程序请求我们的服务端。而且还能对具体的参数地址进行加密。</p>
+
+<h2 id="参数加密">参数加密</h2>
+
+<p>参数加密一般针对表单中的字段和值进行加密，防止中途第三方进行窥探和篡改。一般我们可以用okhttp的Interceptor 进行处理。 可以在发动报文前，对参数进行加密转码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public class EncryptionInterceptor implements Interceptor {  
+ private static final String TAG = EncryptionInterceptor.class.getSimpleName();  
+ private static final boolean DEBUG = true;
+
+   @Override   
+   public Response intercept(Chain chain) throws IOException {   Request request = chain.request();
+   RequestBody oldBody = request.body();
+   Buffer buffer = new Buffer();
+   oldBody.writeTo(buffer);   
+   String strOldBody = buffer.readUtf8();
+   MediaType mediaType = MediaType.parse(&#34;text/plain; charset=utf-8&#34;);   
+   String strNewBody = CodeMachine.encrypt(strOldBody);
+   RequestBody body = RequestBody.create(mediaType, strNewBody);   
+   request = request.newBuilder().header(&#34;Content-Type&#34;, body.contentType().toString()).header(&#34;Content-Length&#34;, String.valueOf(body.contentLength())).method(request.method(), body).build();
+   return chain.proceed(request);
+}}</pre></td></tr></table>
+</div>
+</div>
+<p>加密算法客户端和服务端自行约定即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private static String encrypt(String ){  //your code}</pre></td></tr></table>
+</div>
+</div>
+<p>add到client即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">client = new OkHttpClient.Builder()
+.addNetworkInterceptor(new  EncryptionInterceptor()).build();retrofit = new Retrofit.Builder().client(client).build();</pre></td></tr></table>
+</div>
+</div>
+<p>服务端代码也是拿到具体参数进行同步的加密算法来进行反解密。</p>
+
+<p><strong>这种加密只是比较简单的对称加密，如果要想提高破解难度请使用非对称加密算法</strong></p>
+
+<h2 id="加入权限">加入权限</h2>
+
+<p>权限控制也是对接口加密的一种业务层策略，比如一个电商APP，有商户，有用户，有中间物流商，还有中间服务商，那么同一个获取商品信息的权限不同的，商家有修改商品信息的权限，用户只能浏览查看的功能，物流商可以有指定物流渠道权限，中间服务商可以拥有协调监督功能，如归有涉及假冒，法律的可以强制下架改商品，那么是同样一个getProductInfo接口 却又不同的信息，那么这个接口定义的时候，服务端和移动端就已经商讨好了协议，赋予不同角色权限.</p>
+
+<h2 id="时效验证">时效验证</h2>
+
+<p>时效验证一般是用来校验API是否过期，业内常用来做订单是否重复的依据之一。比如用户在某个购物网站下单买东西时，就会生成下单的时间毫秒数，服务端拿到这个下单(Request)动作的网络请求，会检验这个时间是否过期，如果时间差值大于规定的值，就可视这个订单被中途篡改过，或者过期，比如一秒内重复从一个客户端发两个请求（Request），服务端（server）拿到时间发现已经存在一个，就不再处理第二个订单信息，提示用户不要重复提交。
+一般时间值参数，不会单纯的在请求中单一传输，一般采用某种算法把客户端的时间戳 加密成一定字符后，在进行发送到SERVICE.这种策略对于重复恶意刷单，有很好的防御作用。支付宝付款实则也是用的这种策略，时间阀值大约3s左右。</p>
+
+<h2 id="数字签名">数字签名</h2>
+
+<p>每个Request也应该有响应的数字签名，这个签名不同于SSL机制的中的签名，只是Client和server约定的一种自签名方式，额外校验Request数据有没有被篡改过，也可以称之为每个Request有一定的唯一区分符-ID,签名算法可能很复杂，一般依据本地设备ID，UserID,UUID，Token，综合进行计算，本质其实就是加密，附带给Request。</p>
+
+<h2 id="对称加密">对称加密</h2>
+
+<p>对称加密是最传统的加密方式，比上非对称加密，缺少安全性，但是它依旧是用的比较多的加密方法。
+对称加密采用单密钥加密方式，不论是加密还是解密都是用同一个密钥，即“一把钥匙开一把锁”。对称加密的好处在于操作简单、管理方便、速度快。它的缺点在于密钥在
+网络传输中容易被窃听，每个密钥只能应用一次，对密钥管理造成了困难。对称加密的实现形式和加密算法的公开性使它依赖于密钥的安全性，而不是算法的安全性。</p>
+
+<p><strong>对称加密原理以及对称加密算法</strong></p>
+
+<p>对称加密的核心——通信双方共享一个密钥 通信过程： A有明文m，使用加密算法E，密钥key，生成密文c=E(key,m); B收到密文c,使用解密算法D，密钥key，得到明文
+m=D(key,c); 比喻： 对称加密是最直观，也是历史最久远的加密手段，类似于加锁和解锁，只不过钥匙的个数非常多（~~2^100），一个人穷其一生也试不完所有可能的钥匙
+因此加密密钥能够从解密密钥中推算出来，同时解密密钥也可以从加密密钥中推算出来。而在大多数的对称算法中，加密密钥和解密密钥是相同的，所以也称这种加密算法为秘
+密密钥算法或单密钥算法。它要求发送方和接收方在安全通信之前，商定一个密钥。对称算法的安全性依赖于密钥，泄漏密钥就意味着任何人都可以对他们发送或接收的消息解
+密，所以密钥的保密性对通信性至关重要。
+主要有DES算法，3DES算法，TDEA算法，Blowfish算法，RC5算法，IDEA算法。</p>
+
+<h2 id="非对称加密">非对称加密</h2>
+
+<p>非对称密算法是一种密钥的加密方法。
+非对称加密算法需要两个密钥：公钥（publickey）和私钥（privatekey）。公钥与私钥是一对存在，如果用公钥对数据进行加密，只有用对应的私钥才能解密；如果用密钥对数据进行加密，那么只有用对应的公钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。 非对称加密算法实现机密信息交换的基本过程是：甲方生成一对密钥并将其中的一把作为公用密钥向其它方公开；得到该公用密钥的乙方使用该密钥对机密信息进行加密后再发送给甲方；甲方再用自己保存的另一把专用密钥对加密后的信息进行解密。</p>
+
+<p>另一方面，甲方可以使用乙方的公钥对机密信息进行签名后再发送给乙方；乙方再用自己的私匙对数据进行验签。
+甲方只能用其专用密钥解密由其公用密钥加密后的任何信息。 非对称加密算法的保密性比较好，它消除了最终用户交换密钥的需要。
+非对称密码体制的特点：算法强度复杂、安全性依赖于算法与密钥但是由于其算法复杂，而使得加密解密速度没有对称加密解密的速度快。对称密码体制中只有一种密钥，并且是非公开的，如果要解密就得让对方知道密钥。所以保证其安全性就是保证密钥的安全，而非对称密钥体制有两种密钥，其中一个是公开的，这样就可以不需要像对称密码那样传输对方的密钥了。这样安全性就大了很多。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">列如 ：支付宝的加密方式就采用非对称加密方式，支付宝会给客户提供支付宝证书，作为用户验证是否是来自支付宝的数据，
+防止第三方假冒支付宝，而客户手中持有私钥，用户支付宝发送的数据经过支付宝的公钥进项加密，则支付宝可以采用自己的的私钥进行解密。</pre></td></tr></table>
+</div>
+</div>
+<p><strong>工作过程</strong></p>
+
+<ol>
+<li>A要向B发送信息，A和B都要产生一对用于加密</li>
+<li>A的私钥保密，A的公钥告诉B；B的私钥保密，B的公钥告诉A。</li>
+<li>A要给B发送信息时，A用B的公钥加密信息，因为A知道B的公钥。</li>
+<li>A将这个数据发给B（已经用B的公钥加密消息）。</li>
+<li>B收到这个数据后后，B用自己的私钥解密A的消息。其他所有收到这个报文的人都无法解密，因为只有B才有B的私钥。</li>
+</ol>
+
+<p><code>通俗点可以这么理解</code>：</p>
+
+<ol>
+<li>浏览器向服务器发出请求，询问对方支持的对称加密算法和非对称加密算法；服务器回应自己支持的算法。</li>
+<li>浏览器选择双方都支持的加密算法，并请求服务器出示自己的证书；服务器回应自己的证书。</li>
+<li>浏览器随机产生一个用于本次会话的对称加密的钥匙，并使用服务器证书中附带的公钥对该钥匙进行加密后传递给服务器；服务器为本次会话保持</li>
+
+<li><p>该对称加密的钥匙。第三方不知道服务器的私钥，即使截获了数据也无法解密。非对称加密让任何浏览器都可以与服务器进行加密会话。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">浏览器使用对称加密的钥匙对请求消息加密后传送给服务器，服务器使用该对称加密的钥匙进行解密；       
+服务器使用对称加密的钥匙对响应消息加密后传送给浏览器，浏览器使用该对称加密的钥匙进行解密。   
+第三方不知道对称加密的钥匙，即使截获了数据也无法解密。对称加密提高了加密速度 </pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h2 id="数字证书">数字证书</h2>
+
+<p>数字证书就是互联网通讯中标志通讯各方身份信息的一串数字，提供了一种在Internet上验证通信实体身份的方式，数字证书不是数字身份证，而是身份认证机构盖在数字身份证上的一个章或印（或者说加在数字身份证上的一个签名）。它是由权威机构——CA机构，又称为证书授权（Certificate Authority）中心发行的，人们可以在网上用它来识别对方的身份。</p>
+
+<p>数字证书绑定了公钥及其持有者的真实身份，它类似于现实生活中的居民身份证，所不同的是数字证书不再是纸质的证照，而是一段含有证书持有者身份信息并经过认证中心审核签发的电子数据，广泛用在电子商务和移动互联网中。。</p>
+
+<p>通俗讲就是车管所会给每个车辆进行认证颁发车牌，通过车牌我们可以查到所有车辆和驾驶员的信，二数字证书就辨别唯一身份，支付宝等的数字证书就是公开的，这不是支付宝自己决定，而是由国际组织认证，这样不管是哪个用户首先就可以根据浏览器返回的证书辨别支付宝的真伪。</p>
+
+<h2 id="数字签名-1">数字签名</h2>
+
+<p>`数字签名用来，保证信息传输的完整性、发送者的身份认证、防止交易中的抵赖发生。</p>
+
+<p>数字签名是将摘要信息用发送者的私钥加密，与原文一起传送给接收者。接收者只有用发送者的公钥才能解密被加密的摘要信息，然后用HASH函数对收到的原文产生一个摘要信息，与解密的摘要信息对比。如果相同，则说明收到的信息是完整的，在传输过程中没有被修改，否则说明信息被修改过，因此数字签名能够验证信息的完整性。如果中途数据被纂改或者丢失。那么对方就可以根据数字签名来辨别是否是来自对方的第一手信息数据。</p>
+
+<p>数字签名是个加密的过程，数字签名验证是个解密的过程。</p>
+
+<h1 id="总结">总结</h1>
+
+<p><strong>完整的非对称加密过程：</strong></p>
+
+<p>假如现在 你向支付宝 转账（术语数据信息），为了保证信息传送的保密性、真实性、完整性和不可否认性，需要对传送的信息进行数字加密和签名，其传送过程为：</p>
+
+<ol>
+<li>`首先你要确认是否是支付宝的数字证书，如果确认为支付宝身份后，则对方真实可信。可以向对方传送信息，</li>
+<li>你准备好要传送的数字信息（明文）计算要转的多少钱，对方支付宝账号等；</li>
+<li>你 对数字信息进行哈希运算，得到一个信息摘要（客户端主要职责）；</li>
+<li>你 用自己的私钥对信息摘要进行加密得到 你 的数字签名，并将其附在数字信息上；</li>
+<li>你 随机产生一个加密密钥，并用此密码对要发送的信息进行加密（密文）；</li>
+<li>你用 支付宝的公钥对刚才随机产生的加密密钥进行加密，将加密后的 DES 密钥连同密文一起传送给支付宝；</li>
+<li>支付宝收到 你 传送来的密文和加密过的 DES 密钥，先用自己的私钥对加密的 DES 密钥进行解密，得到 你随机产生的加密密钥；</li>
+<li>支付宝 然后用随机密钥对收到的密文进行解密，得到明文的数字信息，然后将随机密钥抛弃；</li>
+<li>支付宝 用你 的公钥对 你的的数字签名进行解密，得到信息摘要；</li>
+<li>支付宝用相同的哈希算法对收到的明文再进行一次哈希运算，得到一个新的信息摘要；</li>
+<li>支付宝将收到的信息摘要和新产生的信息摘要进行比较，如果一致，说明收到的信息没有被修改过。</li>
+<li>确定收到信息，然后进行向对方进行付款交易，一次非对称密过程结束。在这后面的流程就不属于本次非对称加密的范畴，算支付宝个人的自我流程，也就是循环以上过程。</li>
+</ol>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E6%A6%82%E5%BF%B5/">概念</a>
+          
+          <a href="/xjr99721/tags/%E5%8A%A0%E5%9B%BA/">加固</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/%E6%B6%88%E6%81%AF%E6%9C%BA%E5%88%B6/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">消息处理机制</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/">
+            <span class="next-text nav-default">消息推送</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

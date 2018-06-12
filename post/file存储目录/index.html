@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>File存储目录 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="app文件存储有两种： 独立的，这种是不会随着app删除而删除； 专属的，这种是随着app删除而删除； 独立文件 这种我们通常会存储在外置SD卡上，" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/file%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="File存储目录" />
+<meta property="og:description" content="app文件存储有两种： 独立的，这种是不会随着app删除而删除； 专属的，这种是随着app删除而删除； 独立文件 这种我们通常会存储在外置SD卡上，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/file%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95/" />
+
+
+
+<meta property="article:published_time" content="2018-04-30T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-04-30T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="File存储目录">
+<meta itemprop="description" content="app文件存储有两种： 独立的，这种是不会随着app删除而删除； 专属的，这种是随着app删除而删除； 独立文件 这种我们通常会存储在外置SD卡上，">
+
+
+<meta itemprop="datePublished" content="2018-04-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-04-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="796">
+
+
+
+<meta itemprop="keywords" content="分析,File," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="File存储目录"/>
+<meta name="twitter:description" content="app文件存储有两种： 独立的，这种是不会随着app删除而删除； 专属的，这种是随着app删除而删除； 独立文件 这种我们通常会存储在外置SD卡上，"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">File存储目录</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-30 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 796 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#独立文件">独立文件</a>
+<ul>
+<li><a href="#判断sd卡状态">判断SD卡状态</a></li>
+<li><a href="#获取目录">获取目录</a></li>
+<li><a href="#getexternaldirs">getExternalDirs</a></li>
+</ul></li>
+<li><a href="#专属文件">专属文件</a>
+<ul>
+<li><a href="#internal-storage">internal storage</a></li>
+<li><a href="#external-storage">external storage</a></li>
+<li><a href="#buildexternalstorageappcachedirs">buildExternalStorageAppCacheDirs</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>app文件存储有两种：</p>
+
+<ul>
+<li>独立的，这种是不会随着app删除而删除；</li>
+<li>专属的，这种是随着app删除而删除；</li>
+</ul>
+
+<h2 id="独立文件">独立文件</h2>
+
+<p>这种我们通常会存储在外置SD卡上，当然你也可以选择保存在其他的文件。</p>
+
+<h3 id="判断sd卡状态">判断SD卡状态</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">//判断sd卡是否存在
+boolean sdCardExist = Environment.getExternalStorageState()
+    .equals(android.os.Environment.MEDIA_MOUNTED); </pre></td></tr></table>
+</div>
+</div>
+<h3 id="获取目录">获取目录</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Environment.getExternalStorageDirectory()
+// Environment.getExternalStorageDirectory()
+public static File getExternalStorageDirectory() {
+    throwIfUserRequired();
+    return sCurrentUser.getExternalDirs()[0];
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="getexternaldirs">getExternalDirs</h3>
+
+<p>获取SD卡根目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public File[] getExternalDirs() {
+        final StorageVolume[] volumes = StorageManager.getVolumeList(mUserId,
+                StorageManager.FLAG_FOR_WRITE);
+        final File[] files = new File[volumes.length];
+        for (int i = 0; i &lt; volumes.length; i++) {
+            files[i] = volumes[i].getPathFile();
+        }
+        return files;
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>通常路径是/sdcard/&hellip;.</p>
+
+<p>还有其他的别的目录可以获取文件系统的/data目录，/system目录。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Environment.getDataDirectory();
+Environment.getRootDirectory();</pre></td></tr></table>
+</div>
+</div>
+<h2 id="专属文件">专属文件</h2>
+
+<p>专属文件有两种：</p>
+
+<ul>
+<li>存储在internal storage</li>
+<li>存储在external storage</li>
+</ul>
+
+<h3 id="internal-storage">internal storage</h3>
+
+<p>通常用该方法获取目录<code>context.getFilesDir()</code>
+该方法最终是获取<code>getDataDir()</code>的根目录中建立<code>files</code>
+通常我们的sqlite，shared preference都存储在这</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">@Override
+    public File getFilesDir() {
+    ...
+        synchronized (mSync) {
+            if (mFilesDir == null) {
+                mFilesDir = new File(getDataDir(), &#34;files&#34;);
+...
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>###    getDataDir()</p>
+
+<p>可以看到关键是在<code>mPackageInfo</code>这个中获取的，<code>mPackageInfo</code>是<code>LoadedApk</code>存放了apk相关信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> <span class="err">@</span><span class="nx">Override</span>
+    <span class="nx">public</span> <span class="nx">File</span> <span class="nx">getDataDir</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">mPackageInfo</span> <span class="o">!=</span> <span class="nx">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">File</span> <span class="nx">res</span> <span class="p">=</span> <span class="nx">null</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">isCredentialProtectedStorage</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nx">res</span> <span class="p">=</span> <span class="nx">mPackageInfo</span><span class="p">.</span><span class="nx">getCredentialProtectedDataDirFile</span><span class="p">();</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">isDeviceProtectedStorage</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nx">res</span> <span class="p">=</span> <span class="nx">mPackageInfo</span><span class="p">.</span><span class="nx">getDeviceProtectedDataDirFile</span><span class="p">();</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">res</span> <span class="p">=</span> <span class="nx">mPackageInfo</span><span class="p">.</span><span class="nx">getDataDirFile</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">res</span> <span class="o">!=</span> <span class="nx">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nx">res</span><span class="p">.</span><span class="nx">exists</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">android</span><span class="p">.</span><span class="nx">os</span><span class="p">.</span><span class="nx">Process</span><span class="p">.</span><span class="nx">myUid</span><span class="p">()</span> <span class="o">==</span> <span class="nx">android</span><span class="p">.</span><span class="nx">os</span><span class="p">.</span><span class="nx">Process</span><span class="p">.</span><span class="nx">SYSTEM_UID</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">Log</span><span class="p">.</span><span class="nx">wtf</span><span class="p">(</span><span class="nx">TAG</span><span class="p">,</span> <span class="s">&#34;Data directory doesn&#39;t exist for package &#34;</span> <span class="o">+</span> <span class="nx">getPackageName</span><span class="p">(),</span>
+                            <span class="nx">new</span> <span class="nx">Throwable</span><span class="p">());</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">throw</span> <span class="nx">new</span> <span class="nx">RuntimeException</span><span class="p">(</span>
+                        <span class="s">&#34;No data directory found for package &#34;</span> <span class="o">+</span> <span class="nx">getPackageName</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">throw</span> <span class="nx">new</span> <span class="nx">RuntimeException</span><span class="p">(</span>
+                    <span class="s">&#34;No package details found for package &#34;</span> <span class="o">+</span> <span class="nx">getPackageName</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span></pre></td></tr></table>
+</div>
+</div>
+<p>通常命名是/data/data/应用包名/files</p>
+
+<h3 id="external-storage">external storage</h3>
+
+<p>通常方法有：</p>
+
+<ul>
+<li>context.getExternalCacheDir()</li>
+<li>context.getExternalFilesDir()</li>
+</ul>
+
+<p>大同小异，来看<code>context.getExternalCacheDir()</code></p>
+
+<p>会调用<code>Environment.buildExternalStorageAppCacheDirs</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">@Override
+    public File[] getExternalCacheDirs() {
+        synchronized (mSync) {
+            File[] dirs = Environment.buildExternalStorageAppCacheDirs(getPackageName());
+            return ensureExternalDirsExistOrFilter(dirs);
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<h3 id="buildexternalstorageappcachedirs">buildExternalStorageAppCacheDirs</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public File[] buildExternalStorageAppCacheDirs(String packageName) {
+            return buildPaths(getExternalDirs(), DIR_ANDROID, DIR_DATA, packageName, DIR_CACHE);
+    }
+
+public static final String DIR_ANDROID = &#34;Android&#34;;
+private static final String DIR_DATA = &#34;data&#34;;
+private static final String DIR_MEDIA = &#34;media&#34;;
+private static final String DIR_OBB = &#34;obb&#34;;
+private static final String DIR_FILES = &#34;files&#34;;
+private static final String DIR_CACHE = &#34;cache&#34;;    </pre></td></tr></table>
+</div>
+</div>
+<p>所以最后得到路径一般是 /sdcard/Androdi/data/packageName/cache</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%88%86%E6%9E%90/">分析</a>
+          
+          <a href="/xjr99721/tags/file/">File</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/recyclerview%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">RecyclerView源码分析</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/camera2/">
+            <span class="next-text nav-default">Camera2类</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

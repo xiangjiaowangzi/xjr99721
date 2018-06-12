@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Context分析 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="Context经常称为&amp;rdquo;上下文&amp;rdquo; 关系如图： 可以看出Context只是个抽象类，而实现类则是ContextIml 这里主" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/context%E7%B1%BB/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Context分析" />
+<meta property="og:description" content="Context经常称为&rdquo;上下文&rdquo; 关系如图： 可以看出Context只是个抽象类，而实现类则是ContextIml 这里主" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/context%E7%B1%BB/" />
+
+
+
+<meta property="article:published_time" content="2017-06-28T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-06-28T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Context分析">
+<meta itemprop="description" content="Context经常称为&rdquo;上下文&rdquo; 关系如图： 可以看出Context只是个抽象类，而实现类则是ContextIml 这里主">
+
+
+<meta itemprop="datePublished" content="2017-06-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-06-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1598">
+
+
+
+<meta itemprop="keywords" content="分析,Context," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Context分析"/>
+<meta name="twitter:description" content="Context经常称为&rdquo;上下文&rdquo; 关系如图： 可以看出Context只是个抽象类，而实现类则是ContextIml 这里主"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Context分析</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2017-06-28 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/java/"> Java </a>
+            
+              <a href="/xjr99721/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1598 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#基本介绍">基本介绍</a>
+<ul>
+<li><a href="#contextiml">ContextIml</a></li>
+<li><a href="#contextwrapper">ContextWrapper</a></li>
+<li><a href="#contextthemewrapper">ContextThemeWrapper</a></li>
+</ul></li>
+<li><a href="#context的创建时期">Context的创建时期</a>
+<ul>
+<li><a href="#创建application关联context">创建Application关联Context</a></li>
+<li><a href="#创建activity关联context">创建Activity关联Context</a></li>
+<li><a href="#创建service关联context">创建Service关联Context</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>Context经常称为&rdquo;上下文&rdquo;</p>
+
+<p>关系如图：</p>
+
+<p><img src="https://i.imgur.com/zM058dL.png" alt="" /></p>
+
+<p>可以看出Context只是个抽象类，而实现类则是ContextIml</p>
+
+<p>这里主要是使用了装饰者模式</p>
+
+<h2 id="基本介绍">基本介绍</h2>
+
+<h3 id="contextiml">ContextIml</h3>
+
+<p>Context的实现类，Context的相关方法的具体实现就是该类提供</p>
+
+<h3 id="contextwrapper">ContextWrapper</h3>
+
+<p>只是对Context的一种包装，里面含有了个mBase</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public class ContextWrapper extends Context {
+Context mBase; //该属性指向一个ContextIml实例，一般在创建Application、Service、Activity时赋值 
+
+ //创建Application、Service、Activity，会调用该方法给mBase属性赋值  
+public ContextWrapper(Context base) {
+    mBase = base;
+}
+...</pre></td></tr></table>
+</div>
+</div>
+<h3 id="contextthemewrapper">ContextThemeWrapper</h3>
+
+<p>ContextThemeWrapper继承ContextWrapper
+主要是包含了主题(Theme)相关的接口</p>
+
+<p>可以看出Activity是继承这个类需要主题，而Service是没有继承的</p>
+
+<h2 id="context的创建时期">Context的创建时期</h2>
+
+<p>情况有如下几种情况：</p>
+
+<ol>
+<li>创建Application 对象时， 而且整个App共一个Application对象</li>
+<li>创建Service对象时</li>
+<li>创建Activity对象时</li>
+</ol>
+
+<p><strong>总Context实例个数 = Service个数 + Activity个数 + 1（Application对应的Context实例）</strong></p>
+
+<h3 id="创建application关联context">创建Application关联Context</h3>
+
+<p>创建Application的时候可以在ActivityThread中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private void handleBindApplication(AppBindData data) {
+...
+  final StrictMode.ThreadPolicy savedPolicy = StrictMode.allowThreadDiskWrites();
+    try {
+        // If the app is being launched for full backup or restore, bring it up in
+        // a restricted environment with the base application class.
+        // 调用了Application类中的makeApplication方法
+        Application app = data.info.makeApplication(data.restrictedBackupMode, null);
+        mInitialApplication = app;
+....
+}</pre></td></tr></table>
+</div>
+</div>
+<p>Application的makeApplication方法中创建了一个ContextIml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> public Application makeApplication(boolean forceDefaultAppClass,
+        Instrumentation instrumentation) {
+...
+ // 可见这里新创建了ContextIml类，并传下去
+ ContextImpl appContext = ContextImpl.createAppContext(mActivityThread, this);
+        app = mActivityThread.mInstrumentation.newApplication(
+                cl, appClass, appContext);
+        appContext.setOuterContext(app);
+... 
+}</pre></td></tr></table>
+</div>
+</div>
+<p>最后在Instrumentation中的newApplication方法调用了attach方法关联</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> <span class="nx">static</span> <span class="nx">public</span> <span class="nx">Application</span> <span class="nx">newApplication</span><span class="p">(</span><span class="nx">Class</span><span class="p">&lt;</span><span class="err">?</span><span class="p">&gt;</span> <span class="nx">clazz</span><span class="p">,</span> <span class="nx">Context</span> <span class="nx">context</span><span class="p">)</span>
+        <span class="nx">throws</span> <span class="nx">InstantiationException</span><span class="p">,</span> <span class="nx">IllegalAccessException</span><span class="p">,</span> 
+        <span class="nx">ClassNotFoundException</span> <span class="p">{</span>
+    <span class="nx">Application</span> <span class="nx">app</span> <span class="p">=</span> <span class="p">(</span><span class="nx">Application</span><span class="p">)</span><span class="nx">clazz</span><span class="p">.</span><span class="nx">newInstance</span><span class="p">();</span>
+    <span class="c1">// 调用了attach方法，把ContextIml关联
+</span><span class="c1"></span>    <span class="nx">app</span><span class="p">.</span><span class="nx">attach</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">app</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//Application的attach方法
+</span><span class="c1"></span><span class="cm">/* package */</span> <span class="nx">final</span> <span class="nx">void</span> <span class="nx">attach</span><span class="p">(</span><span class="nx">Context</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 关联进去
+</span><span class="c1"></span>    <span class="nx">attachBaseContext</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+    <span class="nx">mLoadedApk</span> <span class="p">=</span> <span class="nx">ContextImpl</span><span class="p">.</span><span class="nx">getImpl</span><span class="p">(</span><span class="nx">context</span><span class="p">).</span><span class="nx">mPackageInfo</span><span class="p">;</span>
+<span class="p">}</span></pre></td></tr></table>
+</div>
+</div>
+<h3 id="创建activity关联context">创建Activity关联Context</h3>
+
+<p>Activity创建在ActivityThread中调用</p>
+
+<p>主要是调用了performLaunchActivity方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">...
+// 先得到activity
+Activity activity = null;
+    try {
+        java.lang.ClassLoader cl = r.packageInfo.getClassLoader();
+        activity = mInstrumentation.newActivity(
+                cl, component.getClassName(), r.intent);
+        StrictMode.incrementExpectedActivityCount(activity.getClass());
+        r.intent.setExtrasClassLoader(cl);
+        r.intent.prepareToEnterProcess();
+        if (r.state != null) {
+            r.state.setClassLoader(cl);
+        }
+
+...
+    //如果Activity不为空，则创建了一个appContext
+ if (activity != null) {
+            Context appContext = createBaseContextForActivity(r, activity);
+            CharSequence title = r.activityInfo.loadLabel(appContext.getPackageManager());
+            Configuration config = new Configuration(mCompatConfiguration);
+            if (r.overrideConfig != null) {
+                config.updateFrom(r.overrideConfig);
+            }
+...
+//最后调用attach方法关联起来：
+    activity.attach(appContext, this, getInstrumentation(), r.token,
+                    r.ident, app, r.intent, r.activityInfo, title, r.parent,
+                    r.embeddedID, r.lastNonConfigurationInstances, config,
+                    r.referrer, r.voiceInteractor, window);
+}</pre></td></tr></table>
+</div>
+</div>
+<p>关于createBaseContextForActivity方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">...
+//这里还是创建了一个ContextIml
+ContextImpl appContext = ContextImpl.createActivityContext(
+            this, r.packageInfo, r.token, displayId, r.overrideConfig);
+    appContext.setOuterContext(activity);
+    Context baseContext = appContext;
+...</pre></td></tr></table>
+</div>
+</div>
+<h3 id="创建service关联context">创建Service关联Context</h3>
+
+<p>Service的创建也是调用了Activity中的handleCreateService的方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private void handleCreateService(CreateServiceData data) {
+...
+//也是先找到这个Service
+ Service service = null;
+    try {
+        java.lang.ClassLoader cl = packageInfo.getClassLoader();
+        service = (Service) cl.loadClass(data.info.name).newInstance();
+    } catch (Exception e) {
+        if (!mInstrumentation.onException(service, e)) {
+            throw new RuntimeException(
+                &#34;Unable to instantiate service &#34; + data.info.name
+                + &#34;: &#34; + e.toString(), e);
+        }
+    }
+...
+// 最后进行创建ContextIml，然后attach起来
+    ContextImpl context = ContextImpl.createAppContext(this, packageInfo);
+        context.setOuterContext(service);
+
+        Application app = packageInfo.makeApplication(false, mInstrumentation);
+        service.attach(context, this, data.info.name, data.token, app,
+                ActivityManagerNative.getDefault());
+        service.onCreate();
+...
+}</pre></td></tr></table>
+</div>
+</div>
+<p>小结：</p>
+
+<p>通过对ContextImp的分析可知，其方法的大多数操作都是直接调用其属性mPackageInfo(该属性类
+型为PackageInfo)的相关方法而来。</p>
+
+<p>这说明ContextImp是一种轻量级类，而PackageInfo才是真正重量级的类。而一个App里的
+所有ContextIml实例，都对应同一个packageInfo对象。</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%88%86%E6%9E%90/">分析</a>
+          
+          <a href="/xjr99721/tags/context/">Context</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/staticlayout/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">StaticLayout类</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

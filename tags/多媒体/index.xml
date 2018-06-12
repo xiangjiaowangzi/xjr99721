@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>多媒体 on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/%E5%A4%9A%E5%AA%92%E4%BD%93/</link>
+    <description>Recent content in 多媒体 on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 09 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/%E5%A4%9A%E5%AA%92%E4%BD%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Camera2类</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/camera2/</link>
+      <pubDate>Mon, 09 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/camera2/</guid>
+      <description>Camera2 参考官方例子 流程图 这里引用了管道的概念将安卓设备和摄像头之间联通起来，系统向摄像头发送 Capture 请求，而摄像头会返回 CameraMetadata。</description>
+    </item>
+    
+    <item>
+      <title>Camera1类</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/camera1/</link>
+      <pubDate>Sun, 08 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/camera1/</guid>
+      <description>Camera１ 参考官方文档 Camera1在API级别21中弃用，建议使用Camera2 请求权限 1 2 3 &amp;lt;uses-permission android：name =“andro</description>
+    </item>
+    
+  </channel>
+</rss>

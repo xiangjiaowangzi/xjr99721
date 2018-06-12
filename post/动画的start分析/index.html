@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>动画start分析 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="动画分为三种： Tween Animation 补间动画 Drawable Animation帧动画 Property Animation 属性动画 补间动画 调用View.startAnimation(animation)开始" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/%E5%8A%A8%E7%94%BB%E7%9A%84start%E5%88%86%E6%9E%90/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="动画start分析" />
+<meta property="og:description" content="动画分为三种： Tween Animation 补间动画 Drawable Animation帧动画 Property Animation 属性动画 补间动画 调用View.startAnimation(animation)开始" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/%E5%8A%A8%E7%94%BB%E7%9A%84start%E5%88%86%E6%9E%90/" />
+
+
+
+<meta property="article:published_time" content="2018-02-21T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-02-21T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="动画start分析">
+<meta itemprop="description" content="动画分为三种： Tween Animation 补间动画 Drawable Animation帧动画 Property Animation 属性动画 补间动画 调用View.startAnimation(animation)开始">
+
+
+<meta itemprop="datePublished" content="2018-02-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-02-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2030">
+
+
+
+<meta itemprop="keywords" content="分析,View," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="动画start分析"/>
+<meta name="twitter:description" content="动画分为三种： Tween Animation 补间动画 Drawable Animation帧动画 Property Animation 属性动画 补间动画 调用View.startAnimation(animation)开始"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">动画start分析</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-02-21 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2030 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#补间动画">补间动画</a>
+<ul>
+<li><a href="#startanimation">startAnimation</a></li>
+<li><a href="#draw">draw()</a></li>
+<li><a href="#animation-gettransformation">Animation getTransformation</a></li>
+<li><a href="#animation-applytransformation">Animation applyTransformation</a></li>
+</ul></li>
+<li><a href="#帧动画">帧动画</a></li>
+<li><a href="#属性动画">属性动画</a>
+<ul>
+<li><a href="#start">start</a></li>
+<li><a href="#setcurrentfraction">setCurrentFraction</a></li>
+<li><a href="#doanimationframe">doAnimationFrame</a></li>
+<li><a href="#animatebasedontime">animateBasedOnTime</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>动画分为三种：</p>
+
+<ul>
+<li><code>Tween Animation</code> 补间动画</li>
+<li><code>Drawable Animation</code>帧动画</li>
+<li><code>Property Animation</code> 属性动画</li>
+</ul>
+
+<h2 id="补间动画">补间动画</h2>
+
+<p>调用<code>View.startAnimation(animation)</code>开始动画</p>
+
+<h3 id="startanimation">startAnimation</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// 设置aniamtion的mStartTime一般是默认启动也就是-1
+// 设置当前动画mCurrentAnimation = animation
+// 标记mPrivateFlags 为PFLAG_INVALIDATED
+// 最后调用invalidate 重新绘制
+public void startAnimation(Animation animation) {
+    setAnimation(animation);
+    invalidateParentCaches();
+    invalidate(true);
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="draw">draw()</h3>
+
+<p>view在重绘制的时候会调用该方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">boolean draw(Canvas canvas, ViewGroup parent, long drawingTime) {
+       ... // 这里会先找到当前mCurrentAnimation是不是空
+        final Animation a = getAnimation();
+        if (a != null) {
+            // 不是空的话调用applyLegacyAnimation方法
+            more = applyLegacyAnimation(parent, drawingTime, a, scalingRequired);
+           ...
+        return more;
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>### applyLegacyAnimation</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">  private boolean applyLegacyAnimation(ViewGroup parent, long drawingTime,
+            Animation a, boolean scalingRequired) {
+        Transformation invalidationTransform;
+        final int flags = parent.mGroupFlags;
+        final boolean initialized = a.isInitialized();
+        if (!initialized) {// 如果动画还未初始化
+            //对动画a进行reset 并设置a的mPreviousRegion
+            a.initialize(mRight - mLeft, mBottom - mTop, parent.getWidth(), parent.getHeight());
+            a.initializeInvalidateRegion(0, 0, mRight - mLeft, mBottom - mTop);
+            // 绑定回调handle
+            if (mAttachInfo != null) a.setListenerHandler(mAttachInfo.mHandler);
+            // 然后调用onstart
+            onAnimationStart();
+        }
+        // 得到parent中的mChildTransformation
+        final Transformation t = parent.getChildTransformation();
+        // 这里是得到通过动画a对transformation进行改变
+        boolean more = a.getTransformation(drawingTime, t, 1f);
+        ...
+        return more;
+    }</pre></td></tr></table>
+</div>
+</div>
+<h3 id="animation-gettransformation">Animation getTransformation</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public boolean getTransformation(long currentTime, Transformation outTransformation) {
+...
+
+        // 根据mInterpolator计算interpolatedTime值，最后做出对应的操作
+        final float interpolatedTime = mInterpolator.getInterpolation(normalizedTime);
+        applyTransformation(interpolatedTime, outTransformation);
+...
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="animation-applytransformation">Animation applyTransformation</h3>
+
+<p>最后是在applyTransformation方法中实现我们要操作的更改，如AlphaAnimation：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">@Override
+protected void applyTransformation(float interpolatedTime, Transformation t) {
+    final float alpha = mFromAlpha;
+    t.setAlpha(alpha + ((mToAlpha - alpha) * interpolatedTime));
+}</pre></td></tr></table>
+</div>
+</div>
+<h2 id="帧动画">帧动画</h2>
+
+<p>一般用xml的处理比较多,要注意的是如果图片过大，引起OOM问题</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&lt;animation-list xmlns:android = &#34;http://schemas.android.com/apk/res/android&#34;
+    android:oneshot=&#34;false&#34;&gt;
+    &lt;item android:drawable=&#34;@drawable/my1&#34; android:duration=&#34;500&#34; /&gt;
+    &lt;item android:drawable=&#34;@drawable/my2&#34; android:duration=&#34;500&#34; /&gt;
+    &lt;item android:drawable=&#34;@drawable/press&#34; android:duration=&#34;500&#34; /&gt;
+&lt;/animation-list&gt;   </pre></td></tr></table>
+</div>
+</div>
+<p>### AnimationDrawable start</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public void start() {
+    // 标记为true
+    mAnimating = true;
+    if (!isRunning()) {
+        // 调用setFrame方法
+        setFrame(0, false, mAnimationState.getChildCount() &gt; 1
+                || !mAnimationState.mOneShot);
+    }
+}</pre></td></tr></table>
+</div>
+</div>
+<p>### setFrame</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> private void setFrame(int frame, boolean unschedule, boolean animate) {
+        // 如果当前选择的超过了一共的frame，就返回
+        if (frame &gt;= mAnimationState.getChildCount()) {
+            return;
+        }
+        mAnimating = animate;
+        mCurFrame = frame;
+        // 把当前的drawable选为frame
+        // 取得上一个drawable和当前drawble
+        // 调用animate（true）
+        // 根据每个frame设置的动画时间不一致，从而进行淡入淡出动画
+        selectDrawable(frame);
+        if (unschedule || animate) {
+            // callback回调unscheduleSelf
+            unscheduleSelf(this);
+        }
+        if (animate) {
+            // Unscheduling may have clobbered these values; restore them
+            mCurFrame = frame;
+            mRunning = true;
+            // callback回调scheduleSelf
+            scheduleSelf(this, SystemClock.uptimeMillis() + mAnimationState.mDurations[frame]);
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<h2 id="属性动画">属性动画</h2>
+
+<p>目前用得比较多的，可以对任何对象做动画，针对ValueAnimator进行分析</p>
+
+<h3 id="start">start</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// 如果是playBackwards true 则回放，一般是false
+private void start(boolean playBackwards) {
+        对一些状态的判断，以及初始化属性
+        ... 
+        // 添加AnimationFrameCallback 会回调doAnimationFrame
+        addAnimationCallback(0);
+        if (mStartDelay == 0 || mSeekFraction &gt;= 0 || mReversing) {
+            // 调用startAnimation，并回调onAnimationStart
+            startAnimation();
+            // 如果当前的动画分数 是 -1
+            if (mSeekFraction == -1) {
+                //setCurrentPlayTime(0); 方法
+                //则如果动画时间不是0，则设置当前次数（0）
+                //否则则setCurrentFraction（1）当前次数为1
+                setCurrentPlayTime(0);
+            } else {
+                // 设置setCurrentFraction（mSeekFraction）
+                setCurrentFraction(mSeekFraction);
+            }
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<h3 id="setcurrentfraction">setCurrentFraction</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public void setCurrentFraction(float fraction) {
+    // 初始化动画的value属性
+    initAnimation();
+    // 计算动画分子 clampFraction
+    // 如果是循环动画，则返回fraction
+    // 不是则返回 Math.min(fraction, mRepeatCount + 1)
+    fraction = clampFraction(fraction);
+    mStartTimeCommitted = true; // 
+    if (isPulsingInternal()) { // 如果不是第一次动画，上一次的mLastFrameTime &gt;= 0
+        // 重新计算mStartTime
+        long seekTime = (long) (getScaledDuration() * fraction);
+        long currentTime = AnimationUtils.currentAnimationTimeMillis();
+        mStartTime = currentTime - seekTime;
+    } else {
+        // 修改mSeekFraction的值
+        mSeekFraction = fraction;
+    }
+    mOverallFraction = fraction;
+    final float currentIterationFraction = getCurrentIterationFraction(fraction, mReversing);
+    // 通过mInterpolator重新计算fraction
+    // mValues[i].calculateValue(fraction)，重新计算值
+    // 最后调用onAnimationUpdate
+    animateValue(currentIterationFraction);
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="doanimationframe">doAnimationFrame</h3>
+
+<p>每一帧会回调改方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public final boolean doAnimationFrame(long frameTime) {
+       根据pause，resume等状态进行一些列操作
+       ... 
+       // 关键方法animateBasedOnTime判断是否完成动画
+        boolean finished = animateBasedOnTime(currentTime);
+
+        if (finished) {
+            endAnimation();
+        }
+        return finished;
+    }</pre></td></tr></table>
+</div>
+</div>
+<h3 id="animatebasedontime">animateBasedOnTime</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">boolean animateBasedOnTime(long currentTime) {
+        boolean done = false;
+        if (mRunning) { //如果是running
+            // 动画时间
+            final long scaledDuration = getScaledDuration();
+            // 当前动画次数
+            final float fraction = scaledDuration &gt; 0 ?
+                    (float)(currentTime - mStartTime) / scaledDuration : 1f;
+            // 上一次的动画次数     
+            final float lastFraction = mOverallFraction;
+           // 当前的动画次数 是比 上一次的要大  
+            final boolean newIteration = (int) fraction &gt; (int) lastFraction;
+            // 是否完成，不是循环动画，且动画分子大于了动画次数
+            final boolean lastIterationFinished = (fraction &gt;= mRepeatCount + 1) &amp;&amp;
+                    (mRepeatCount != INFINITE);
+            if (scaledDuration == 0) { 
+                // 没有动画时间 直接返回true
+                done = true;
+            } else if (newIteration &amp;&amp; !lastIterationFinished) {
+                // 如果是新的，而且没有完成，则重新动画
+                if (mListeners != null) {
+                    int numListeners = mListeners.size();
+                    for (int i = 0; i &lt; numListeners; ++i) {
+                        mListeners.get(i).onAnimationRepeat(this);
+                    }
+                }
+            } else if (lastIterationFinished) {
+                // 如果是完成了 也返回true
+                done = true;
+            }
+            mOverallFraction = clampFraction(fraction);
+            float currentIterationFraction = getCurrentIterationFraction(
+                    mOverallFraction, mReversing);
+                    // 更新动画
+            animateValue(currentIterationFraction);
+        }
+        return done;
+    }</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%88%86%E6%9E%90/">分析</a>
+          
+          <a href="/xjr99721/tags/view/">View</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/countdownlatch%E4%B8%8Ejoin%E7%9A%84%E5%8C%BA%E5%88%AB/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">CountDownLatch与Join的区别</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/constraintlayout%E5%B8%83%E5%B1%80/">
+            <span class="next-text nav-default">ConstraintLayout类</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>CountDownLatch与Join的区别 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="都用与阻塞线程 Join 情景: 假设一条流水线上有三个工作者：worker0，worker1，worker2。有一个任务的完成需要他们三者协作完成，w" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/countdownlatch%E4%B8%8Ejoin%E7%9A%84%E5%8C%BA%E5%88%AB/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="CountDownLatch与Join的区别" />
+<meta property="og:description" content="都用与阻塞线程 Join 情景: 假设一条流水线上有三个工作者：worker0，worker1，worker2。有一个任务的完成需要他们三者协作完成，w" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/countdownlatch%E4%B8%8Ejoin%E7%9A%84%E5%8C%BA%E5%88%AB/" />
+
+
+
+<meta property="article:published_time" content="2018-03-03T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-03-03T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="CountDownLatch与Join的区别">
+<meta itemprop="description" content="都用与阻塞线程 Join 情景: 假设一条流水线上有三个工作者：worker0，worker1，worker2。有一个任务的完成需要他们三者协作完成，w">
+
+
+<meta itemprop="datePublished" content="2018-03-03T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-03-03T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1562">
+
+
+
+<meta itemprop="keywords" content="并发,线程,类," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CountDownLatch与Join的区别"/>
+<meta name="twitter:description" content="都用与阻塞线程 Join 情景: 假设一条流水线上有三个工作者：worker0，worker1，worker2。有一个任务的完成需要他们三者协作完成，w"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">CountDownLatch与Join的区别</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-03 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/java/"> Java </a>
+            
+              <a href="/xjr99721/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1562 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#join">Join</a></li>
+<li><a href="#countdownlatch">CountDownLatch</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>都用与阻塞线程</p>
+
+<h2 id="join">Join</h2>
+
+<p>情景:</p>
+
+<p>假设一条流水线上有三个工作者：worker0，worker1，worker2。有一个任务的完成需要他们三者协作完成，worker2可以开始这个任务的前提是worker0和worker1完成了他们的工作，而worker0和worker1是可以并行他们各自的工作的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    public class Worker extends Thread {  
+
+    //工作者名  
+    private String name;  
+    //工作时间  
+    private long time;  
+
+    public Worker(String name, long time) {  
+        this.name = name;  
+        this.time = time;  
+    }  
+
+    @Override  
+    public void run() {  
+        // TODO 自动生成的方法存根  
+        try {  
+            System.out.println(name+&#34;开始工作&#34;);  
+            Thread.sleep(time);  
+            System.out.println(name+&#34;工作完成，耗费时间=&#34;+time);  
+        } catch (InterruptedException e) {  
+            // TODO 自动生成的 catch 块  
+            e.printStackTrace();  
+        }     
+    }  
+}</pre></td></tr></table>
+</div>
+</div>
+<p>Test类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public class Test {  
+
+    public static void main(String[] args) throws InterruptedException {  
+        // TODO 自动生成的方法存根  
+
+        Worker worker0 = new Worker(&#34;worker0&#34;, (long) (Math.random()*2000+3000));  
+        Worker worker1 = new Worker(&#34;worker1&#34;, (long) (Math.random()*2000+3000));  
+        Worker worker2 = new Worker(&#34;worker2&#34;, (long) (Math.random()*2000+3000));  
+
+        worker0.start();  
+        worker1.start();  
+
+        worker0.join();  
+        worker1.join();  
+        System.out.println(&#34;准备工作就绪&#34;);  
+
+        worker2.start();          
+    }  
+} </pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">worker1开始工作
+worker0开始工作
+worker1工作完成，耗费时间=3947
+worker0工作完成，耗费时间=4738
+准备工作就绪
+worker2开始工作
+worker2工作完成，耗费时间=4513</pre></td></tr></table>
+</div>
+</div>
+<h2 id="countdownlatch">CountDownLatch</h2>
+
+<p>情景：</p>
+
+<p>假设worker的工作可以分为两个阶段，work2 只需要等待work0和work1完成他们各自工作的第一个阶段之后就可以开始自己的工作了，而不是场景1中的必须等待work0和work1把他们的工作全部完成之后才能开始。</p>
+
+<p>Work类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public class Worker extends Thread {  
+
+    //工作者名  
+    private String name;  
+    //第一阶段工作时间  
+    private long time;  
+
+    private CountDownLatch countDownLatch;  
+
+    public Worker(String name, long time, CountDownLatch countDownLatch) {  
+        this.name = name;  
+        this.time = time;  
+        this.countDownLatch = countDownLatch;  
+    }  
+
+    @Override  
+    public void run() {  
+        // TODO 自动生成的方法存根  
+        try {  
+            System.out.println(name+&#34;开始工作&#34;);  
+            Thread.sleep(time);  
+            System.out.println(name+&#34;第一阶段工作完成&#34;);  
+
+            countDownLatch.countDown();  
+
+            Thread.sleep(2000); //这里就姑且假设第二阶段工作都是要2秒完成  
+            System.out.println(name+&#34;第二阶段工作完成&#34;);  
+            System.out.println(name+&#34;工作完成，耗费时间=&#34;+(time+2000));  
+
+        } catch (InterruptedException e) {  
+            // TODO 自动生成的 catch 块  
+            e.printStackTrace();  
+        }     
+    }  
+}  </pre></td></tr></table>
+</div>
+</div>
+<p>Test类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public class Test {  
+
+    public static void main(String[] args) throws InterruptedException {  
+        // TODO 自动生成的方法存根  
+
+        CountDownLatch countDownLatch = new CountDownLatch(2);  
+        Worker worker0 = new Worker(&#34;worker0&#34;, (long) (Math.random()*2000+3000CountDownLatch与join的区别：调用thread.join() 方法必须等thread 执行完毕，当前线程才能继续往下执行，而CountDownLatch通过计数器提供了更灵活的控制，只要检测到计数器为0当前线程就可以往下执行而不用管相应的thread是否执行完毕。), countDownLatch);  
+        Worker worker1 = new Worker(&#34;worker1&#34;, (long) (Math.random()*2000+3000), countDownLatch);  
+        Worker worker2 = new Worker(&#34;worker2&#34;, (long) (Math.random()*2000+3000), countDownLatch);  
+
+        worker0.start();  
+        worker1.start();      
+        countDownLatch.await();  
+
+        System.out.println(&#34;准备工作就绪&#34;);  
+        worker2.start();  
+
+    }  </pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">worker0开始工作
+worker1开始工作
+worker1第一阶段工作完成
+worker0第一阶段工作完成
+准备工作就绪
+worker2开始工作
+worker1第二阶段工作完成
+worker1工作完成，耗费时间=5521
+worker0第二阶段工作完成
+worker0工作完成，耗费时间=6147
+worker2第一阶段工作完成
+worker2第二阶段工作完成
+worker2工作完成，耗费时间=5384</pre></td></tr></table>
+</div>
+</div>
+<p>CountDownLatch与join的区别：调用thread.join() 方法必须等thread 执行完毕，当前线程才能继续往下执行，而CountDownLatch通过计数器提供了更灵活的控制，只要检测到计数器为0当前线程就可以往下执行而不用管相应的thread是否执行完毕。</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+          
+          <a href="/xjr99721/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
+          
+          <a href="/xjr99721/tags/%E7%B1%BB/">类</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/samaphore%E4%BB%8B%E7%BB%8D/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Semaphore类</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/%E5%8A%A8%E7%94%BB%E7%9A%84start%E5%88%86%E6%9E%90/">
+            <span class="next-text nav-default">动画start分析</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>RecyclerView源码分析 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="View的绘制 onMeasure 开始，如果mLayout是空的，就会调用默认绘制方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 if (mLayout == null) { defaultOnMeasure(widthSpec, heightSpec); return; } ** 默认的绘制方法 void defaultOnMeasure(int" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/recyclerview%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="RecyclerView源码分析" />
+<meta property="og:description" content="View的绘制 onMeasure 开始，如果mLayout是空的，就会调用默认绘制方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 if (mLayout == null) { defaultOnMeasure(widthSpec, heightSpec); return; } ** 默认的绘制方法 void defaultOnMeasure(int" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/recyclerview%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" />
+
+
+
+<meta property="article:published_time" content="2018-05-15T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-05-15T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="RecyclerView源码分析">
+<meta itemprop="description" content="View的绘制 onMeasure 开始，如果mLayout是空的，就会调用默认绘制方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 if (mLayout == null) { defaultOnMeasure(widthSpec, heightSpec); return; } ** 默认的绘制方法 void defaultOnMeasure(int">
+
+
+<meta itemprop="datePublished" content="2018-05-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-05-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5610">
+
+
+
+<meta itemprop="keywords" content="分析,View," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RecyclerView源码分析"/>
+<meta name="twitter:description" content="View的绘制 onMeasure 开始，如果mLayout是空的，就会调用默认绘制方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 if (mLayout == null) { defaultOnMeasure(widthSpec, heightSpec); return; } ** 默认的绘制方法 void defaultOnMeasure(int"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">RecyclerView源码分析</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-05-15 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5610 字 </span>
+        <span class="more-meta"> 预计阅读 12 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#view的绘制">View的绘制</a>
+<ul>
+<li><a href="#onmeasure">onMeasure</a></li>
+</ul></li>
+<li><a href="#onlayout">onLayout</a>
+<ul>
+<li><a href="#dispatchlayoutstep1">dispatchLayoutStep1()</a>
+<ul>
+<li><a href="#processadapterupdatesandsetanimationflags-方法">processAdapterUpdatesAndSetAnimationFlags（）方法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ondraw">onDraw</a>
+<ul>
+<li><a href="#draw">draw</a></li>
+<li><a href="#ondraw-1">onDraw</a></li>
+</ul></li>
+<li><a href="#linearlayoutmanager">LinearLayoutManager</a>
+<ul>
+<li><a href="#dispatchlayoutstep1-1">dispatchLayoutStep1</a></li>
+<li><a href="#dispatchlayoutstep2">dispatchLayoutStep2</a></li>
+<li><a href="#dispatchlayoutstep3">dispatchLayoutStep3</a></li>
+<li><a href="#onlayoutchildren-mrecycler-mstate">onLayoutChildren(mRecycler, mState)</a></li>
+<li><a href="#scrapview">scrapView</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="view的绘制">View的绘制</h2>
+
+<h3 id="onmeasure">onMeasure</h3>
+
+<p>开始，如果mLayout是空的，就会调用默认绘制方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">if (mLayout == null) {
+        defaultOnMeasure(widthSpec, heightSpec);
+        return;
+    }
+
+** 默认的绘制方法    
+void defaultOnMeasure(int widthSpec, int heightSpec) {
+    // 为RecyclerView测量最小大小
+    final int width = LayoutManager.chooseSize(widthSpec,
+            getPaddingLeft() + getPaddingRight(),
+            ViewCompat.getMinimumWidth(this));
+    final int height = LayoutManager.chooseSize(heightSpec,
+            getPaddingTop() + getPaddingBottom(),
+            ViewCompat.getMinimumHeight(this));
+
+    setMeasuredDimension(width, height);
+}</pre></td></tr></table>
+</div>
+</div>
+<p>如果mLayout是自动测量，让mLayout进行测量，然后根据mState.mLayoutStep的状态进行是否 dispatchLayoutStep1()，接着dispatchLayoutStep2()等</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">if (mLayout.mAutoMeasure) {
+        ...
+        // 让LayoutManager负责测量 ，默认的方法是defaultOnMeasure，也可自己重写
+        mLayout.onMeasure(mRecycler, mState, widthSpec, heightSpec);
+        if (skipMeasure || mAdapter == null) {
+            return;
+        }
+        // mState.mLayoutStep 是负责对应几个状态，一般状态STEP_START，需要dispatchLayoutStep1()
+        if (mState.mLayoutStep == State.STEP_START) {
+            dispatchLayoutStep1();
+        }
+        // 值得注意的是，setMeasureSpecs这个方法是放在dispatchLayoutStep1()后面，然后才开始真正测量大小
+        mLayout.setMeasureSpecs(widthSpec, heightSpec);
+        // 测量完毕，修改状态为true
+        mState.mIsMeasuring = true; 
+        dispatchLayoutStep2();
+        // 测量子类大小,
+        mLayout.setMeasuredDimensionFromChildren(widthSpec, heightSpec);
+        // 如果需要进行两次测量
+        if (mLayout.shouldMeasureTwice()) {
+            继续重新测量自己大小和子类大小
+            ...
+        }
+    } else {
+      ...</pre></td></tr></table>
+</div>
+</div>
+<p>如果不是自动测量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    // 这里注意 如果设置了hasFixedSize,直接mLayout.onMeasure(mRecycler, mState, widthSpec, heightSpec)，然后返回
+    // 就不在需要考虑adapter个别item的改变,onItemRangeChanged
+    if (mHasFixedSize) {
+            mLayout.onMeasure(mRecycler, mState, widthSpec, heightSpec);
+            return;
+        }
+        // 如果是执行了onItemRangeChanged，onItemRangeInserted等针对一个item的监听会触发
+        // 主要是针对adapter
+        if (mAdapterUpdateDuringMeasure) {
+            eatRequestLayout();
+            onEnterLayoutOrScroll();
+            processAdapterUpdatesAndSetAnimationFlags();
+            onExitLayoutOrScroll();
+            ...
+        mLayout.onMeasure(mRecycler, mState, widthSpec, heightSpec);
+        resumeRequestLayout(false);
+        mState.mInPreLayout = false; // clear
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>大致分析整个Measure流程，最主要的还是mLayout.onMeasure(mRecycler, mState, widthSpec, heightSpec);还是交给了mLayout进行测量</p>
+
+<h2 id="onlayout">onLayout</h2>
+
+<p>onLayout里主要是分为了三个步骤，分别是dispatchLayoutStep1()，dispatchLayoutStep2()，dispatchLayoutStep3();</p>
+
+<p>mState.mLayoutStep有三种状态，分别是：STEP_START，STEP_LAYOUT，STEP_ANIMATIONS</p>
+
+<p>mLayout.setExactMeasureSpecsFrom(this); 这个是都执行了，作用是把RecyclerView的宽，高都设置为了MeasureSpec.EXACTLY模式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">mState.mIsMeasuring = false;
+    if (mState.mLayoutStep == State.STEP_START) { // 如果还是STEP_START，那就先dispatchLayoutStep1()
+        dispatchLayoutStep1();
+        mLayout.setExactMeasureSpecsFrom(this);
+        dispatchLayoutStep2();
+    } else if (mAdapterHelper.hasUpdates() || mLayout.getWidth() != getWidth()
+            || mLayout.getHeight() != getHeight()) {
+        // 已经重新有测量过
+        mLayout.setExactMeasureSpecsFrom(this);
+        dispatchLayoutStep2();
+    } else {
+        mLayout.setExactMeasureSpecsFrom(this);
+    }
+    dispatchLayoutStep3();</pre></td></tr></table>
+</div>
+</div>
+<h3 id="dispatchlayoutstep1">dispatchLayoutStep1()</h3>
+
+<p>里面十分复杂，根据注释结合理解，主要作用是对Adapter进行更新，计算保存item的动画信息，绝对哪个动画要执行，并且不断调整mState的信息，</p>
+
+<p>里面有个重要的方法，processAdapterUpdatesAndSetAnimationFlags，最主要目的是处理item动画</p>
+
+<h4 id="processadapterupdatesandsetanimationflags-方法">processAdapterUpdatesAndSetAnimationFlags（）方法</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private void processAdapterUpdatesAndSetAnimationFlags() {
+        if (mDataSetHasChangedAfterLayout) { // 是否有重新设置过数据，比如notofydatasetCHange
+            // 所以我们要重新reset，
+            // AdapterHelper.reset 主要是 记录UpdateOp的list全部reset掉
+            // UpdateOp 是来处理跟踪item相关操作的
+            mAdapterHelper.reset();
+            mLayout.onItemsChanged(this);
+        }
+        //是否支持预期动画
+        if (predictiveItemAnimationsEnabled()) {
+            mAdapterHelper.preProcess();
+        } else {
+            mAdapterHelper.consumeUpdatesInOnePass();
+        }
+
+        //mRunSimpleAnimations 为true
+        //1.mFirstLayoutComplete为true(onLayout第一次执行完后被置为true)
+        //2.mItemAnimator不为空
+        //3.Layout后数据发生了变化 或 有item被移除或添加 或 LayoutManager请求执行simple animations
+        //4.Layout后数据不发生变化 或 mAdapter有稳定的ID
+
+        boolean animationTypeSupported = mItemsAddedOrRemoved || mItemsChanged;
+        mState.mRunSimpleAnimations = mFirstLayoutComplete
+                &amp;&amp; mItemAnimator != null
+                &amp;&amp; (mDataSetHasChangedAfterLayout
+                || animationTypeSupported
+                || mLayout.mRequestedSimpleAnimations)
+                &amp;&amp; (!mDataSetHasChangedAfterLayout
+                || mAdapter.hasStableIds());
+
+         //mRunPredictiveAnimations 为true
+       // 1.mRunSimpleAnimations为true
+         // 2.有item添加或移除
+         // 3.Layout后数据未发生变化
+         // 4.预期Item动画被开启       
+
+        mState.mRunPredictiveAnimations = mState.mRunSimpleAnimations
+                &amp;&amp; animationTypeSupported
+                &amp;&amp; !mDataSetHasChangedAfterLayout
+                &amp;&amp; predictiveItemAnimationsEnabled();
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>dispatchLayoutStep1() 大致就是帮助我们处理adapter更新，确定执行动画，保存view的信息等</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> private void dispatchLayoutStep1() {
+    清除mViewInfoStore的信息，如果还在滑动，记录滑动的信息到mState等等
+    ...
+    // 这个方法比较重要
+    processAdapterUpdatesAndSetAnimationFlags();
+   ...
+   // 确定第一个和最后一个view的位置信息
+    findMinMaxChildLayoutPositions(mMinMaxLayoutPositions);
+
+    // 如果要执行simple动画就
+    if (mState.mRunSimpleAnimations) {
+        .... 获取对应的信息并且添加到mViewInfoStore中
+           final ItemHolderInfo animationInfo = mItemAnimator
+                    .recordPreLayoutInformation(mState, holder,
+                            ItemAnimator.buildAdapterChangeFlagsForAnimations(holder),
+                            holder.getUnmodifiedPayloads());
+            mViewInfoStore.addToPreLayout(holder, animationInfo);
+        ...
+                mViewInfoStore.addToOldChangeHolders(key, holder);
+            }
+        }
+    }
+    if (mState.mRunPredictiveAnimations) {
+      ... 同上，如果要
+         // 这里会再次调用onLayoutChildren方法
+          mLayout.onLayoutChildren(mRecycler, mState);
+        }
+        // we don&#39;t process disappearing list because they may re-appear in post layout pass.
+        clearOldPositions();
+    } else {
+        clearOldPositions();
+    }
+    onExitLayoutOrScroll();
+    resumeRequestLayout(false);
+    mState.mLayoutStep = State.STEP_LAYOUT;
+}</pre></td></tr></table>
+</div>
+</div>
+<p>最后把mState的状态改为STEP_LAYOUT，可以说是绘制Layout前的准备</p>
+
+<p>### dispatchLayoutStep2</p>
+
+<p>该方法开始 mLayout.onLayoutChildren(mRecycler, mState); 方法进行布局</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private void dispatchLayoutStep2() {
+    // 进入布局
+    eatRequestLayout();
+    onEnterLayoutOrScroll();
+    mState.assertLayoutStep(State.STEP_LAYOUT | State.STEP_ANIMATIONS);
+    // 跳过预期动画的处理
+    mAdapterHelper.consumeUpdatesInOnePass();
+    mState.mItemCount = mAdapter.getItemCount();
+    mState.mDeletedInvisibleItemCountSincePreviousLayout = 0;
+
+    // 开始调用 mLayout.onLayoutChildren(mRecycler, mState); 方法进行布局
+    mState.mInPreLayout = false;
+    mLayout.onLayoutChildren(mRecycler, mState);
+
+    mState.mStructureChanged = false;
+    mPendingSavedState = null;
+
+    //最后把状态修改为State.STEP_ANIMATIONS;
+    mState.mLayoutStep = State.STEP_ANIMATIONS;
+    onExitLayoutOrScroll();
+    resumeRequestLayout(false);
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>### dispatchLayoutStep3</p>
+
+<p>这方法主要是进行动画的处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    private void dispatchLayoutStep3() {
+    // 进入布局阶段，并且修改为State.STEP_START
+    mState.assertLayoutStep(State.STEP_ANIMATIONS);
+    eatRequestLayout();
+    onEnterLayoutOrScroll();
+    mState.mLayoutStep = State.STEP_START;
+    if (mState.mRunSimpleAnimations) {
+        // 开始执行每个view的信息检查，是否要处理动画
+        for (int i = mChildHelper.getChildCount() - 1; i &gt;= 0; i--) {
+            ... 找到ItemHolderInfo 保存了view的信息
+            final ItemHolderInfo animationInfo = mItemAnimator
+                    .recordPostLayoutInformation(mState, holder);
+            // 旧的view的信息        
+            ViewHolder oldChangeViewHolder = mViewInfoStore.getFromOldChangeHolders(key);
+            if (oldChangeViewHolder != null &amp;&amp; !oldChangeViewHolder.shouldIgnore()) {
+                final boolean oldDisappearing = mViewInfoStore.isDisappearing(
+                        oldChangeViewHolder);
+                final boolean newDisappearing = mViewInfoStore.isDisappearing(holder);
+                // 如果之前的view信息是消失了，不需要进行动画处理
+                if (oldDisappearing &amp;&amp; oldChangeViewHolder == holder) {
+                    mViewInfoStore.addToPostLayout(holder, animationInfo);
+                } else {
+                    // 否则得到之前的ItemHolderInfo 
+                    final ItemHolderInfo preInfo = mViewInfoStore.popFromPreLayout(
+                            oldChangeViewHolder);
+                    mViewInfoStore.addToPostLayout(holder, animationInfo);
+                    ItemHolderInfo postInfo = mViewInfoStore.popFromPostLayout(holder);
+                    if (preInfo == null) {
+                        // 如果之前的preInfo为空
+                        handleMissingPreInfoForChangeError(key, holder, oldChangeViewHolder);
+                    } else {
+                        // 不为空的话，动画处理
+                        animateChange(oldChangeViewHolder, holder, preInfo, postInfo,
+                                oldDisappearing, newDisappearing);
+                    }
+                }
+            ...
+        }
+
+        mViewInfoStore.process(mViewInfoProcessCallback);
+    }
+    一系列收尾工作
+    ...</pre></td></tr></table>
+</div>
+</div>
+<p>简单分析了解了onLayout的流程，可以看出最主要的布局还是交给了mLayout去执行，当然里面还有有细节需要另外分析。</p>
+
+<h2 id="ondraw">onDraw</h2>
+
+<p>主要还是我们平时一些分割线的绘制回调</p>
+
+<h3 id="draw">draw</h3>
+
+<p>主要还是调用了mItemDecorations中的onDrawOver方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    final int count = mItemDecorations.size();
+    for (int i = 0; i &lt; count; i++) {
+        // 调用了mItemDecorations中的onDrawOver方法
+        mItemDecorations.get(i).onDrawOver(c, this, mState);
+    }
+   ... 中间部分是 滑动到左边右边上边下边时候的EdgeEffect
+    if (needsInvalidate) {
+        ViewCompat.postInvalidateOnAnimation(this);
+    }</pre></td></tr></table>
+</div>
+</div>
+<h3 id="ondraw-1">onDraw</h3>
+
+<p>主要还是调用了mItemDecorations中的onDraw方法
+        @Override
+    public void onDraw(Canvas c) {
+        super.onDraw&copy;;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    final int count = mItemDecorations.size();
+    for (int i = 0; i &lt; count; i++) {
+        mItemDecorations.get(i).onDraw(c, this, mState);
+    }
+}</pre></td></tr></table>
+</div>
+</div>
+<h2 id="linearlayoutmanager">LinearLayoutManager</h2>
+
+<p>从之前的onLayout三步骤去分析：</p>
+
+<h3 id="dispatchlayoutstep1-1">dispatchLayoutStep1</h3>
+
+<p>如果是允许预期动画了，此时会调用mLayout.onLayoutChildren(mRecycler, mState);</p>
+
+<p>然后dispatchLayoutStep1完后 会调用mLayout.setExactMeasureSpecsFrom(this); 确定大小</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">...
+    if (mState.mRunPredictiveAnimations) {
+   ...
+        mLayout.onLayoutChildren(mRecycler, mState);
+        mState.mStructureChanged = didStructureChange;
+    ...
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="dispatchlayoutstep2">dispatchLayoutStep2</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private void dispatchLayoutStep2() {
+ ...
+    // Step 2: Run layout
+    mState.mInPreLayout = false;
+    mLayout.onLayoutChildren(mRecycler, mState);
+...
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="dispatchlayoutstep3">dispatchLayoutStep3</h3>
+
+<p>步骤3的时候  removeAndRecycleScrapInt,最后onLayoutCompleted</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private void dispatchLayoutStep3() {
+   ... 
+    mLayout.removeAndRecycleScrapInt(mRecycler);
+    ...
+    mLayout.mRequestedSimpleAnimations = false;
+      ... 
+    //初始预取扩展了缓存，因此重置到下一个预取。
+    //这防止初始预取永久地扩展高速缓存。
+    if (mLayout.mPrefetchMaxObservedInInitialPrefetch) {
+        mLayout.mPrefetchMaxCountObserved = 0;
+        mLayout.mPrefetchMaxObservedInInitialPrefetch = false;
+        mRecycler.updateViewCacheSize();
+    }
+
+    mLayout.onLayoutCompleted(mState);
+    ... </pre></td></tr></table>
+</div>
+</div>
+<h3 id="onlayoutchildren-mrecycler-mstate">onLayoutChildren(mRecycler, mState)</h3>
+
+<p>核心方法，计算mAnchorInfo，判断mAnchorInfo.mLayoutFromEnd方向，执行对应的fling方法，最后还要重新检查更新那些位置有差距，进行修补</p>
+
+<p>关于fling方法，调用layoutChunk方法，里面view的添加，位置摆放全放在里面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">@Override
+public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+   ... 重置mAnchorInfo的属性，并且重新设置mAnchorInfo
+   // detachAndScrapAttachedViews方法回调了recyclerview中的scrapOrRecycleView方法
+    detachAndScrapAttachedViews(recycler);
+    mLayoutState.mInfinite = resolveIsInfinite();
+    mLayoutState.mIsPreLayout = state.isPreLayout();
+    if (mAnchorInfo.mLayoutFromEnd) { // 如果方向是start
+     ...
+    } else {// 如果方向是end，看一个就好
+        // 更新mAnchorInfo状态
+        // 分别想end方向，start方向，执行fling方法
+        // 最后如果不够,mAvailable&gt;0 我们还需要填充
+        updateLayoutStateToFillEnd(mAnchorInfo);
+        mLayoutState.mExtra = extraForEnd;
+        fill(recycler, mLayoutState, state, false);
+        endOffset = mLayoutState.mOffset;
+        final int lastElement = mLayoutState.mCurrentPosition;
+        if (mLayoutState.mAvailable &gt; 0) {
+            extraForStart += mLayoutState.mAvailable;
+        }
+        // fill towards start
+        updateLayoutStateToFillStart(mAnchorInfo);
+        mLayoutState.mExtra = extraForStart;
+        mLayoutState.mCurrentPosition += mLayoutState.mItemDirection;
+        fill(recycler, mLayoutState, state, false);
+        startOffset = mLayoutState.mOffset;
+
+        if (mLayoutState.mAvailable &gt; 0) {
+            extraForEnd = mLayoutState.mAvailable;
+            // start could not consume all it should. add more items towards end
+            updateLayoutStateToFillEnd(lastElement, endOffset);
+            mLayoutState.mExtra = extraForEnd;
+            fill(recycler, mLayoutState, state, false);
+            endOffset = mLayoutState.mOffset;
+        }
+    }
+
+
+    // 最后还要重新检查更新那些位置有差距，进行修补
+    if (getChildCount() &gt; 0) {
+        // because layout from end may be changed by scroll to position
+        // we re-calculate it.
+        // find which side we should check for gaps.
+        if (mShouldReverseLayout ^ mStackFromEnd) {
+            int fixOffset = fixLayoutEndGap(endOffset, recycler, state, true);
+            startOffset += fixOffset;
+            endOffset += fixOffset;
+            fixOffset = fixLayoutStartGap(startOffset, recycler, state, false);
+            startOffset += fixOffset;
+            endOffset += fixOffset;
+        } else {
+            int fixOffset = fixLayoutStartGap(startOffset, recycler, state, true);
+            startOffset += fixOffset;
+            endOffset += fixOffset;
+            fixOffset = fixLayoutEndGap(endOffset, recycler, state, false);
+            startOffset += fixOffset;
+            endOffset += fixOffset;
+        }
+    }
+    // 执行了预期动画
+    layoutForPredictiveAnimations(recycler, state, startOffset, endOffset);
+    ...
+}</pre></td></tr></table>
+</div>
+</div>
+<p>这里不详细去跟，至于findLastCompletelyVisibleItemPosition等方法是
+  根据ViewBoundsCheck类中的findOneViewWithinBoundFlags方法去匹配，初始化是在RecyclerVIew上</p>
+
+<p>## Recycler</p>
+
+<p>核心类，整个回收机制都在这个类上</p>
+
+<p>### recycleView</p>
+
+<p>首先是调用scrapOrRecycleView进行mAttachedScrap或者是mChangedScrap的缓存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    private void scrapOrRecycleView(Recycler recycler, int index, View view) {
+        ...
+        判断可以看到如果是viewHolder初始化没有真正移除,mAdapter没有hasStableIds()
+        内部缓存recycleViewHolderInternal(viewHolder)
+        否则 scrapView 缓存 
+        detachViewAt 然后回收该view
+        if (viewHolder.isInvalid() &amp;&amp; !viewHolder.isRemoved()
+                &amp;&amp; !mRecyclerView.mAdapter.hasStableIds()) {
+            removeViewAt(index);
+            recycler.recycleViewHolderInternal(viewHolder);
+        } else {
+            detachViewAt(index);
+            recycler.scrapView(view);
+            mRecyclerView.mViewInfoStore.onViewDetached(viewHolder);
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<h3 id="scrapview">scrapView</h3>
+
+<p>该方法也是通过一系列的判断是 mAttachedScrap.add(holder); 还是 mChangedScrap.add(holder);</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">void scrapView(View view) {
+        final ViewHolder holder = getChildViewHolderInt(view);
+        if (holder.hasAnyOfTheFlags(ViewHolder.FLAG_REMOVED | ViewHolder.FLAG_INVALID)
+                || !holder.isUpdated() || canReuseUpdatedViewHolder(holder)) {
+           ...
+            holder.setScrapContainer(this, false);
+            mAttachedScrap.add(holder);
+        } else {
+            if (mChangedScrap == null) {
+                mChangedScrap = new ArrayList&lt;ViewHolder&gt;();
+            }
+            holder.setScrapContainer(this, true);
+            mChangedScrap.add(holder);
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>然后cache缓存一个viwe的时候可以调用 public void recycleView(View view) 方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public void recycleView(View view) {
+        // This public recycle method tries to make view recycle-able since layout manager
+        // intended to recycle this view (e.g. even if it is in scrap or change cache)
+        ViewHolder holder = getChildViewHolderInt(view);
+        if (holder.isTmpDetached()) {
+            removeDetachedView(view, false);
+        }
+        if (holder.isScrap()) {
+            holder.unScrap();
+        } else if (holder.wasReturnedFromScrap()) {
+            holder.clearReturnedFromScrapFlag();
+        }
+        recycleViewHolderInternal(holder);
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>关键是调用了recycleViewHolderInternal(holder);</p>
+
+<p>### recycleViewHolderInternal</p>
+
+<p>该方法是recycler如何缓存viewholder的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">     void recycleViewHolderInternal(ViewHolder holder) {
+       开始对holder进行一些判断，如果不满足 抛出异常
+       ... 
+        if (forceRecycle || holder.isRecyclable()) { // 如果强行recycle或者允许recycyle
+         // 如果mViewCacheMax大于0
+            if (mViewCacheMax &gt; 0
+                    &amp;&amp; !holder.hasAnyOfTheFlags(ViewHolder.FLAG_INVALID
+                    | ViewHolder.FLAG_REMOVED
+                    | ViewHolder.FLAG_UPDATE
+                    | ViewHolder.FLAG_ADAPTER_POSITION_UNKNOWN)) {
+                // 如果缓存的view的数量大于了最大值，就把第一个给移除，添加到pool中
+                int cachedViewSize = mCachedViews.size();
+                if (cachedViewSize &gt;= mViewCacheMax &amp;&amp; cachedViewSize &gt; 0) {
+                    recycleCachedViewAt(0);
+                    cachedViewSize--;
+                }
+
+                int targetCacheIndex = cachedViewSize;
+                ...
+                这里会找到targetCacheIndex
+                   targetCacheIndex = cacheIndex + 1;
+                ... 
+                最终添加到cacheview中
+                mCachedViews.add(targetCacheIndex, holder);
+                cached = true; 说明已经缓存过
+            }
+            if (!cached) { 没有缓存过 就加到
+                addViewHolderToRecycledViewPool(holder, true);
+                recycled = true;
+            }
+        } else {
+
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>### recycleCachedViewAt</p>
+
+<p>将cacheview的移除，放到pool那里去</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    ...
+        addViewHolderToRecycledViewPool(viewHolder, true);
+        mCachedViews.remove(cachedViewIndex);、
+    ...</pre></td></tr></table>
+</div>
+</div>
+<p>###  tryGetViewHolderForPositionByDeadline</p>
+
+<p>获取ViewHolder的时候会调用tryGetViewHolderForPositionByDeadline方法</p>
+
+<p>getChangedScrapViewForPosition方法是获取mChangedScrap里面的holder</p>
+
+<p>getScrapOrHiddenOrCachedHolderForPosition方法是获取mAttachedScrap里面的holder</p>
+
+<p>RecyclerPool 通过mScrapHeap缓存，默认缓存5个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">ViewHolder tryGetViewHolderForPositionByDeadline(int position,
+            boolean dryRun, long deadlineNs) {
+      ...
+      如果是mState的状态是准备layout，通过chagngeview获取holder
+        if (mState.isPreLayout()) {
+        // 从mChangedScrap里面的holder
+            holder = getChangedScrapViewForPosition(position);
+            fromScrapOrHiddenOrCache = holder != null;
+        }
+        // holder依然是空
+        if (holder == null) {
+            // 通过pos，mAttachedScrap里面的holder，没有继续根据mCachedViews中的
+            holder = getScrapOrHiddenOrCachedHolderForPosition(position, dryRun);
+            // 如果holder不是空
+            if (holder != null) {
+                // 检测该holder是否可用
+                if (!validateViewHolderForOffsetPosition(holder)) {
+               ...
+               可用缓存起来
+               ...
+                } else {
+                    fromScrapOrHiddenOrCache = true;
+                }
+            }
+        }
+        // 如果holder还是空
+        if (holder == null) {
+         ...
+            if (mAdapter.hasStableIds()) {
+               // 通过 stable id 先从mAttachedScrap ，然后再从mCachedViews
+                holder = getScrapOrCachedViewForId(mAdapter.getItemId(offsetPosition),
+                        type, dryRun);
+              ...
+            if (holder == null &amp;&amp; mViewCacheExtension != null) {
+                final View view = mViewCacheExtension
+                        .getViewForPositionAndType(this, position, type);
+                if (view != null) {
+                    // 从mViewCacheExtension获取view，如果view不为空，在从里面获取holder
+                    holder = getChildViewHolder(view);
+                    if (holder == null) { // 需要注意如果view不为空，holder空了 会报错
+                        throw new IllegalArgumentException(&#34;getViewForPositionAndType returned&#34;
+                                + &#34; a view which does not have a ViewHolder&#34;
+                                + exceptionLabel());
+                 ...
+            if (holder == null) { // fallback to pool
+                ... 如果还是空，从pool中获取holder
+                holder = getRecycledViewPool().getRecycledView(type);
+           ...
+            }
+            if (holder == null) {
+          ... 最后才调用createViewHolder方法去createHolder
+                holder = mAdapter.createViewHolder(RecyclerView.this, type);
+          ....
+        return holder;
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>大致总结：首先是判断mState的状态，如果是isPreLayout()则从mChangeSrap根据pos获取，然后是1级缓存mAttachScrap 通过pos获取，mCacheView 通过pos获取，接着，根据adapter stable id 获取，然后mViewCacheExtension获取view中的holder，最后才从pool中获取，没有就createHolder</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%88%86%E6%9E%90/">分析</a>
+          
+          <a href="/xjr99721/tags/view/">View</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/xjr99721/post/file%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95/">
+            <span class="next-text nav-default">File存储目录</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

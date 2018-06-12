@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>端外推送 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="什么是端外推送？ 通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来： 当App在前台运行的时候，这时的推送称为端内推送。端" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="端外推送" />
+<meta property="og:description" content="什么是端外推送？ 通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来： 当App在前台运行的时候，这时的推送称为端内推送。端" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/" />
+
+
+
+<meta property="article:published_time" content="2017-10-04T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-04T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="端外推送">
+<meta itemprop="description" content="什么是端外推送？ 通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来： 当App在前台运行的时候，这时的推送称为端内推送。端">
+
+
+<meta itemprop="datePublished" content="2017-10-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1634">
+
+
+
+<meta itemprop="keywords" content="概念,消息推送," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="端外推送"/>
+<meta name="twitter:description" content="什么是端外推送？ 通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来： 当App在前台运行的时候，这时的推送称为端内推送。端"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">端外推送</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2017-10-04 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1634 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#什么是端外推送">什么是端外推送？</a></li>
+<li><a href="#为什么要使用端外推送">为什么要使用端外推送？</a></li>
+<li><a href="#怎么使用端外推送">怎么使用端外推送？</a></li>
+<li><a href="#推送工作流程图">推送工作流程图</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="什么是端外推送">什么是端外推送？</h2>
+
+<p>通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来：</p>
+
+<ol>
+<li>当App在前台运行的时候，这时的推送称为端内推送。端内推送一般是走App自己实现的一套推送系统：推送服务器是自己的，客户端维护一条长连接连到自己的推送服务器，不依赖任何第三方的推送系统。</li>
+<li>当App从前台退到后台，在短时间内App未被杀死前，App自己的长连接仍然有效。这时的推送可以仍然走App自己的推送系统。所谓的“Android进程保活”，就是为了尽量延长这段在后台存活的时间。</li>
+<li>当App在后台运行足够长的时间后，App进程由于被清理或者其它原因，App自己的长连接断开。这时的推送就称为端外推送了，只能走某个第三方推送平台了。</li>
+</ol>
+
+<h2 id="为什么要使用端外推送">为什么要使用端外推送？</h2>
+
+<ol>
+<li>假如App的推送进程能够一直存活不被清理，那么端内推送就能够很好的满足各方面的需求，但是由于android系统本身对于这种行为是拒绝的，所以网上进程保活的<a href="https://github.com/Marswin/MarsDaemon">黑科技</a>都是不稳定的；</li>
+<li>如果不能保证App进程一直存活，那么退而求其次，当App进程被杀死的时候能够及时有效的被重新唤醒，恰好端外推送能满足这一需求</li>
+<li>目前通过端外推送（第三方推送）实现拉活的方式已经是业界公认的处理方式（手Q和微信等白名单另说），因此对于某些手机不能正常接到推送，可能是手机管家之类的自启动开关或者关联开关关闭导致的；</li>
+</ol>
+
+<h2 id="怎么使用端外推送">怎么使用端外推送？</h2>
+
+<p><strong>1.首先要选择合适的第三方端外推送平台</strong>，根据<a href="https://mp.weixin.qq.com/s?__biz=MzA5OTMxMjQzMw==&amp;mid=2648112527&amp;idx=1&amp;sn=b23c1b5f3e32e343ad96d705bd4d63ff&amp;scene=1&amp;srcid=0711SVtLTxYXurfDvMqW2LJi&amp;uin=MjQwMDgwNDM1&amp;key=77421cf58af4a6536ca031a71c4f7bb7f13f6ea3c8eb83bf829c172d7cd7f7f72a832c33e87a7c45d7273b914b351fdf&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.11.5+build(15F34)&amp;version=11020201&amp;lang=zh_CN&amp;pass_ticket=%2BTp9qbxmROPbRlT9zfp7uAY%2FVToJEmd09DOFY3Fc49Y%3D">国内Top500Android应用分析报告</a>（2016-07-11）：</p>
+
+<p><strong>2.第三方推送平台的工作流程。</strong>一次典型的消息推送过程如下图所示：
+<img src="https://i.imgur.com/FiAP3lj.jpg" alt="" /></p>
+
+<p>大致的流程可以描述如下:</p>
+
+<p>a、开发者首先将消息推送指令发送给第三方推送提供商，告知推送服务商本次推送任务要发送的内容和目标对象；</p>
+
+<p>b、推送服务商收到推送指令后，会对推送的设备集合做有效性检查，同时选择当时长连通道在线的设备进行消息下发；</p>
+
+<p>c、消息会首先送达设备，送达设备后，会根据 App 包名( Android 平台以包名作为 App 的唯一标识)路由给 App ，路由到 App 之后，终端用户就可以接收到通知消息了，由此消息推送的整个过程就算完成；</p>
+
+<p><strong>3.通常第三方推送平台都支持两种推送消息类型：通知栏消息和透传消息。</strong></p>
+
+<p>a、通知栏消息，在被送达用户的设备后，直接以系统通知的形式展示给用户。它不会继续被传递到App（如上图3-2中的流程1）。如果App有自己的端内推送系统，那么这种通知栏推送消息就更合适一些。当端内推送的长连接失效时，我们通过通知栏消息把提醒展示给用户，由用户唤起我们的App，然后真正的消息数据再经由端内推送达到客户端。</p>
+
+<p>b、透传消息，在被送达用户的设备后，还会继续路由到App，通过回调App的某个BroadcastReceiver的形式将消息传递到App内部，然后由App决定如何处理和显示这个消息（如上图3-2中的流程1-2）。透传消息在整个消息传递过程中比通知栏消息多了一步，因此就增加一些被系统限制的概率。所以说，通知栏消息比透传消息应该能提供更好的送达率。</p>
+
+<p><strong>4.第三方推送的一些限制。</strong></p>
+
+<p>a、个推等到一定的消息量级会收费；</p>
+
+<p>b、小米推送SDK提供同步方法却做异步的事，一个命令之后才能进行下一个命令操作；</p>
+
+<p>c、华为推送对透传的支持API一次只能发送1000个设备；</p>
+
+<p>d、由于第三方推送都是共用一个推送通道，所以存在推送通道堵塞的可能。这样就导致后面排队的app收不到端外推送通知；</p>
+
+<p><strong>5.手机厂商的市场份额的变化，以及推送平台市场的变化，</strong></p>
+
+<p>Android推送也是一个不断处于变化中的话题。GitHub上有一个讨论Android推送的帖子（由Trinea大神发起），这个帖子从2015年5月份开始讨论至今，仍然没有人给出一个完美的解决方案。所以我们开发者需要实现一个拓展性强的推送架构，这样就能及时切换到某个第三方的推送渠道。另外，由于国内的各大手机厂商对于安卓系统做了各种不同的定制，增加了很多安全性的限制，导致推送成了一个很复杂的问题。而这个市场中又没有哪一家完美解决了所有手机设备的推送送达的问题。同时，微信由于其先发优势和规模优势，进入了各大厂商受保护的白名单，进一步拉开了与其他App在推送送达率上的距离。</p>
+
+<h2 id="推送工作流程图">推送工作流程图</h2>
+
+<p><img src="https://i.imgur.com/rVYoeKY.jpg" alt="" /></p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E6%A6%82%E5%BF%B5/">概念</a>
+          
+          <a href="/xjr99721/tags/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/">消息推送</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">消息推送</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/image%E7%9A%84scaaletype%E5%B1%9E%E6%80%A7/">
+            <span class="next-text nav-default">Image的scaleType属性</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

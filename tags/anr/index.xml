@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Anr on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/anr/</link>
+    <description>Recent content in Anr on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 18 Aug 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/anr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ANR的触发原理</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/anr/</link>
+      <pubDate>Fri, 18 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/anr/</guid>
+      <description>ANR的触发原理 理解Android ANR的触发原理 ANR是什么 是android的一种监测机制，如果ui线程在特定时间无法对输入事件做出响应或</description>
+    </item>
+    
+  </channel>
+</rss>

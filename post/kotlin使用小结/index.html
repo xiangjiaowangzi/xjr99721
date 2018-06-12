@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Kotlin函数 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="懒加载 lateinit 懒加载，则用于只能生命周期流程中进行获取或者初始化的变量，比如 Android 的 onCreate()，修饰var lazy函数 1 public fun &amp;lt;T&amp;gt; lazy(initializer: () -&amp;gt; T): Lazy&amp;lt;T&amp;gt; = SynchronizedLazyImpl(initializer)" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/kotlin%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Kotlin函数" />
+<meta property="og:description" content="懒加载 lateinit 懒加载，则用于只能生命周期流程中进行获取或者初始化的变量，比如 Android 的 onCreate()，修饰var lazy函数 1 public fun &lt;T&gt; lazy(initializer: () -&gt; T): Lazy&lt;T&gt; = SynchronizedLazyImpl(initializer)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/kotlin%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/" />
+
+
+
+<meta property="article:published_time" content="2017-08-28T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-08-28T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Kotlin函数">
+<meta itemprop="description" content="懒加载 lateinit 懒加载，则用于只能生命周期流程中进行获取或者初始化的变量，比如 Android 的 onCreate()，修饰var lazy函数 1 public fun &lt;T&gt; lazy(initializer: () -&gt; T): Lazy&lt;T&gt; = SynchronizedLazyImpl(initializer)">
+
+
+<meta itemprop="datePublished" content="2017-08-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-08-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1374">
+
+
+
+<meta itemprop="keywords" content="函数," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kotlin函数"/>
+<meta name="twitter:description" content="懒加载 lateinit 懒加载，则用于只能生命周期流程中进行获取或者初始化的变量，比如 Android 的 onCreate()，修饰var lazy函数 1 public fun &lt;T&gt; lazy(initializer: () -&gt; T): Lazy&lt;T&gt; = SynchronizedLazyImpl(initializer)"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Kotlin函数</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2017-08-28 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/kotlin/"> Kotlin </a>
+            
+          </div>
+        <span class="more-meta"> 约 1374 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#懒加载">懒加载</a>
+<ul>
+<li>
+<ul>
+<li><a href="#lateinit">lateinit</a></li>
+<li><a href="#lazy函数">lazy函数</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#by-委托模式">by 委托模式</a>
+<ul>
+<li>
+<ul>
+<li><a href="#定义语法">定义语法：</a></li>
+<li><a href="#可观察属性-observable-与vetoable">可观察属性(Observable)与Vetoable</a></li>
+<li><a href="#not-null">Not Null</a>
+<ul>
+<li><a href="#将多个属性保存在一个map内">将多个属性保存在一个map内</a></li>
+</ul></li>
+<li><a href="#自定义委托模式-可参考observable或者与vetoable">自定义委托模式 可参考Observable或者与Vetoable</a></li>
+<li><a href="#为属性设置委托">为属性设置委托</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#高阶函数">高阶函数</a>
+<ul>
+<li><a href="#let函数">let函数</a></li>
+<li><a href="#with函数">with函数</a></li>
+<li><a href="#apply函数">apply函数</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h3 id="懒加载">懒加载</h3>
+
+<h5 id="lateinit">lateinit</h5>
+
+<p>懒加载，则用于只能生命周期流程中进行获取或者初始化的变量，比如 Android 的 onCreate()，修饰var</p>
+
+<h5 id="lazy函数">lazy函数</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    public fun &lt;T&gt; lazy(initializer: () -&gt; T): Lazy&lt;T&gt; = SynchronizedLazyImpl(initializer)</pre></td></tr></table>
+</div>
+</div>
+<p>使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> //得到lazy对象
+val init = lazy(LazyThreadSafetyMode.SYNCHRONIZED) { TextView(this).apply {
+    textSize = sp(10f).toFloat()
+    textColor = Color.BLUE}
+ }
+
+//或者 不设置参数
+val init = lazy { TextView(this).apply {
+    textSize = sp(10f).toFloat()
+    textColor = Color.BLUE}
+ }</pre></td></tr></table>
+</div>
+</div>
+<p>懒加载，与by经常一起使用，修饰val</p>
+
+<hr />
+
+<h3 id="by-委托模式">by 委托模式</h3>
+
+<p>Kotlin中，委托的实现依靠于关键字<font color=#0099ff size=5 face="黑体">by</font>表示将抽象主题的实例(by后边的实例)保存在代理类实例的内部</p>
+
+<h5 id="定义语法">定义语法：</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    val/var &lt;property name&gt;: &lt;Type&gt; by &lt;expression&gt;
+    比如：  val a:Int by lazy {2}
+    比如:
+    interface ISports {
+        fun doSports()
+    }
+
+    class SwimForSports: ISports{
+        override fun doSports() {
+            println(&#34;do swim&#34;)
+        }
+    }
+
+    class SportsManager(sport: ISports): ISports by sport
+
+    fun main(args: Array&lt;String&gt;) {
+        val swimSports: SwimForSports = SwimForSports()
+        SportsManager(swimSports).doSports()// Log：do swim
+    }        </pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>var/val：属性类型(可变/只读)</li>
+<li>name：属性名称</li>
+<li>Type：属性的数据类型</li>
+<li>expression：代理类<br /></li>
+</ul>
+
+<h5 id="可观察属性-observable-与vetoable">可观察属性(Observable)与Vetoable</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">var name: String by Delegates.observable(&#34;wang&#34;, {
+    kProperty, oldName, newName -&gt;
+    println(&#34;kProperty：${kProperty.name} | oldName:$oldName | newName:$newName&#34;)
+})
+
+fun main(args: Array&lt;String&gt;) {
+
+    println(&#34;name: $name&#34;) // Log：nam：wang
+
+    name = &#34;zhang&#34; // Log：kProperty：name | oldName:wang | newName:zhang
+
+    name = &#34;li&#34; // Log：kProperty：name | oldName:zhang | newName:li
+}    </pre></td></tr></table>
+</div>
+</div>
+<p>区别是Vetoable会有返回值，如果返回值是true，才允许赋值</p>
+
+<h5 id="not-null">Not Null</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">class App : Application() {
+    companion object {
+        var instance: App by Delegates.notNull()
+    } 
+
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
+    }
+}</pre></td></tr></table>
+</div>
+</div>
+<h6 id="将多个属性保存在一个map内">将多个属性保存在一个map内</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">class User(val map: Map&lt;String, Any?&gt;) {
+    val name: String by map
+    val age: Int by map
+}</pre></td></tr></table>
+</div>
+</div>
+<h5 id="自定义委托模式-可参考observable或者与vetoable">自定义委托模式 可参考Observable或者与Vetoable</h5>
+
+<p>ReadOnlyProperty接口主要用于实现只读属性的属性委托。</p>
+
+<p>ReadWriteProperty接口主要用于实现可变属性的属性委托。</p>
+
+<p>创建一个委托类SingleValueVar，继承自ReadWriteProperty</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">class SingleValueVar&lt;T&gt; : ReadWriteProperty&lt;Any?, T&gt; {
+
+    private var value: T? = null
+
+    override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;, value: T) {
+        if (null != value &amp;&amp; null == this.value) {
+            this.value = value // 只允许了初次修改
+        }
+    }
+
+    override fun getValue(thisRef: Any?, property: KProperty&lt;*&gt;): T {
+        return value!!
+    }
+}</pre></td></tr></table>
+</div>
+</div>
+<h5 id="为属性设置委托">为属性设置委托</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">class Student {
+    var no: Int by SingleValueVar&lt;Int&gt;()
+    var name: String = &#34;wang&#34;
+    override fun toString(): String {
+        return &#34;no: $no | name: $name&#34;
+    }
+}</pre></td></tr></table>
+</div>
+</div>
+<p>#####  测试实例
+    fun main(args: Array<String>) {
+        var stu: Student = Student()</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    stu.no = 20
+    stu.name = &#34;wang&#34;
+
+    println(stu.toString()) // 打印：no: 20 | name: wang
+
+    stu.no = 30
+    stu.name = &#34;li&#34;
+    println(stu.toString()) // 打印：no: 20 | name: li
+}</pre></td></tr></table>
+</div>
+</div>
+<h2 id="高阶函数">高阶函数</h2>
+
+<h3 id="let函数">let函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public inline fun &lt;T, R&gt; T.let(block: (T) -&gt; R): R {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return block(this)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>适用于处理不为null的操作场景</p>
+
+<p>### also函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> public inline fun &lt;T&gt; T.also(block: (T) -&gt; Unit): T {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    block(this)
+    return this
+}</pre></td></tr></table>
+</div>
+</div>
+<p>适用于let函数的任何场景，一般可用于多个扩展函数链式调用</p>
+
+<h3 id="with函数">with函数</h3>
+
+<p>不是拓展函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public inline fun &lt;T, R&gt; with(receiver: T, block: T.() -&gt; R): R {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return receiver.block()
+}</pre></td></tr></table>
+</div>
+</div>
+<p>适用于调用同一个类的多个方法时，可以省去类名重复，直接调用类的方法即可，经常用于Android中RecyclerView中onBinderViewHolder中，数据model的属性映射到UI上</p>
+
+<p>### run函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> public inline fun &lt;R&gt; run(block: () -&gt; R): R {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return block()
+}</pre></td></tr></table>
+</div>
+</div>
+<p>适用于let,with函数任何场景。</p>
+
+<h3 id="apply函数">apply函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public inline fun &lt;T&gt; T.apply(block: T.() -&gt; Unit): T {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    block()
+    return this
+}</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>适用于run函数的任何场景，一般用于初始化一个对象实例的时候，操作对象属性，并最终返回这个对象。</li>
+<li>动态inflate出一个XML的View的时候需要给View绑定数据也会用到.</li>
+<li>一般可用于多个扩展函数链式调用</li>
+<li>数据model多层级包裹判空处理的问题<br />
+<br /></li>
+</ul>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/image%E7%9A%84scaaletype%E5%B1%9E%E6%80%A7/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Image的scaleType属性</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/anr/">
+            <span class="next-text nav-default">ANR的触发原理</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

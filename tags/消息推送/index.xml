@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>消息推送 on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</link>
+    <description>Recent content in 消息推送 on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 04 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>消息推送</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</link>
+      <pubDate>Wed, 04 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</guid>
+      <description>消息推送，就是在互联网上通过定期传送用户需要的信息来减少信息过载的一项新技术。推送技术通过自动传送信息给用户，来减少用于网络上搜索的时间。它</description>
+    </item>
+    
+    <item>
+      <title>端外推送</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/</link>
+      <pubDate>Wed, 04 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/</guid>
+      <description>什么是端外推送？ 通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来： 当App在前台运行的时候，这时的推送称为端内推送。端</description>
+    </item>
+    
+  </channel>
+</rss>

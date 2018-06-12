@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>File on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/file/</link>
+    <description>Recent content in File on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 30 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/file/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>File存储目录</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/file%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95/</link>
+      <pubDate>Mon, 30 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/file%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95/</guid>
+      <description>app文件存储有两种： 独立的，这种是不会随着app删除而删除； 专属的，这种是随着app删除而删除； 独立文件 这种我们通常会存储在外置SD卡上，</description>
+    </item>
+    
+  </channel>
+</rss>

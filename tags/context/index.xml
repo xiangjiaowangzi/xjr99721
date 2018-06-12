@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Context on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/context/</link>
+    <description>Recent content in Context on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 28 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/context/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Context分析</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/context%E7%B1%BB/</link>
+      <pubDate>Wed, 28 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/context%E7%B1%BB/</guid>
+      <description>Context经常称为&amp;rdquo;上下文&amp;rdquo; 关系如图： 可以看出Context只是个抽象类，而实现类则是ContextIml 这里主</description>
+    </item>
+    
+  </channel>
+</rss>

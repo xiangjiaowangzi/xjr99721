@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>线程 on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/%E7%BA%BF%E7%A8%8B/</link>
+    <description>Recent content in 线程 on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 03 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/%E7%BA%BF%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CountDownLatch与Join的区别</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/countdownlatch%E4%B8%8Ejoin%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Sat, 03 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/countdownlatch%E4%B8%8Ejoin%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description>都用与阻塞线程 Join 情景: 假设一条流水线上有三个工作者：worker0，worker1，worker2。有一个任务的完成需要他们三者协作完成，w</description>
+    </item>
+    
+  </channel>
+</rss>

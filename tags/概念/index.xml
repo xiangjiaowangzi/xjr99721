@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>概念 on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/%E6%A6%82%E5%BF%B5/</link>
+    <description>Recent content in 概念 on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 19 Dec 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/%E6%A6%82%E5%BF%B5/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android性能优化</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Tue, 19 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E7%BB%93/</guid>
+      <description>本文从电量，内存，界面，网络，图片，线程等方面进行记录优化小结 电量优化 工具检测 电量优化可以使用 Battery Historian工具 耗电因素 屏幕：每次锁屏</description>
+    </item>
+    
+    <item>
+      <title>接口加固技术</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%9B%BA%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Fri, 20 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%9B%BA%E6%8A%80%E6%9C%AF/</guid>
+      <description>接口加固技术 简介 API加固的常用技术。常用的模式是加密-认证身份-鉴别权限-解密过程。 Api加固除了本身支持Https，还会额外进行上图中一</description>
+    </item>
+    
+    <item>
+      <title>消息推送</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</link>
+      <pubDate>Wed, 04 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</guid>
+      <description>消息推送，就是在互联网上通过定期传送用户需要的信息来减少信息过载的一项新技术。推送技术通过自动传送信息给用户，来减少用于网络上搜索的时间。它</description>
+    </item>
+    
+    <item>
+      <title>端外推送</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/</link>
+      <pubDate>Wed, 04 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/</guid>
+      <description>什么是端外推送？ 通常大厂的App都会区分端内推送和端外推送（端指的是客户端），具体说来： 当App在前台运行的时候，这时的推送称为端内推送。端</description>
+    </item>
+    
+    <item>
+      <title>ANR的触发原理</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/anr/</link>
+      <pubDate>Fri, 18 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/anr/</guid>
+      <description>ANR的触发原理 理解Android ANR的触发原理 ANR是什么 是android的一种监测机制，如果ui线程在特定时间无法对输入事件做出响应或</description>
+    </item>
+    
+    <item>
+      <title>IntentService类</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/intentservice/</link>
+      <pubDate>Sat, 22 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/intentservice/</guid>
+      <description>继承Service ， 内部含有HandleService ， 典型的Loop机制 HandleService 在线程中封装好了Loop.prapre 和 Loop.loop 等方法 专门用于处理耗时</description>
+    </item>
+    
+  </channel>
+</rss>

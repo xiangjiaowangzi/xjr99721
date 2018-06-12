@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Camera2类 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="Camera2 参考官方例子 流程图 这里引用了管道的概念将安卓设备和摄像头之间联通起来，系统向摄像头发送 Capture 请求，而摄像头会返回 CameraMetadata。" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/camera2/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Camera2类" />
+<meta property="og:description" content="Camera2 参考官方例子 流程图 这里引用了管道的概念将安卓设备和摄像头之间联通起来，系统向摄像头发送 Capture 请求，而摄像头会返回 CameraMetadata。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/camera2/" />
+
+
+
+<meta property="article:published_time" content="2018-04-09T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-04-09T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Camera2类">
+<meta itemprop="description" content="Camera2 参考官方例子 流程图 这里引用了管道的概念将安卓设备和摄像头之间联通起来，系统向摄像头发送 Capture 请求，而摄像头会返回 CameraMetadata。">
+
+
+<meta itemprop="datePublished" content="2018-04-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-04-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2976">
+
+
+
+<meta itemprop="keywords" content="类,多媒体," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Camera2类"/>
+<meta name="twitter:description" content="Camera2 参考官方例子 流程图 这里引用了管道的概念将安卓设备和摄像头之间联通起来，系统向摄像头发送 Capture 请求，而摄像头会返回 CameraMetadata。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Camera2类</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-09 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2976 字 </span>
+        <span class="more-meta"> 预计阅读 6 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#camera2">Camera2</a>
+<ul>
+<li><a href="#流程图">流程图</a></li>
+<li><a href="#类图">类图</a>
+<ul>
+<li><a href="#cameramanager">CameraManager</a></li>
+<li><a href="#cameracharacteristics">CameraCharacteristics</a></li>
+<li><a href="#cameradevice">CameraDevice</a></li>
+<li><a href="#cameracapturesession">CameraCaptureSession</a></li>
+<li><a href="#camerarequest和camerarequest-builder">CameraRequest和CameraRequest.Builder</a></li>
+</ul></li>
+<li><a href="#预览流程">预览流程</a>
+<ul>
+<li><a href="#权限与请求">权限与请求</a></li>
+<li><a href="#开启线程">开启线程</a></li>
+<li><a href="#cameracapturesession-capturecallback">CameraCaptureSession.CaptureCallback()</a></li>
+<li><a href="#进行拍照">进行拍照</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="camera2">Camera2</h1>
+
+<p>参考官方例子</p>
+
+<h2 id="流程图">流程图</h2>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/2086682-e68d187e1240bfc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="" /></p>
+
+<blockquote>
+<p>这里引用了管道的概念将安卓设备和摄像头之间联通起来，系统向摄像头发送 Capture 请求，而摄像头会返回 CameraMetadata。这一切建立在一个叫作 CameraCaptureSession 的会话中。</p>
+</blockquote>
+
+<h2 id="类图">类图</h2>
+
+<p><img src="https://img-blog.csdn.net/20160327172949469" alt="" /></p>
+
+<h3 id="cameramanager">CameraManager</h3>
+
+<p>摄像头管理器。这是一个全新的系统管理器，专门用于检测系统摄像头、打开系统摄像头。另外，调用<code>CameraManager</code>的<code>getCameraCharacteristics(String cameraId)</code>方法即可获取指定摄像头的相关特性。</p>
+
+<h3 id="cameracharacteristics">CameraCharacteristics</h3>
+
+<p>摄像头特性。该对象通过<code>CameraManager</code>来获取，用于描述特定摄像头所支持的各种特性。类似与原来的<code>CameraInfo</code>。</p>
+
+<h3 id="cameradevice">CameraDevice</h3>
+
+<p>代表系统摄像头。该类的功能类似于早期的Camera类。而每个 <code>CameraDevice</code> 自己会负责建立 <code>CameraCaptureSession</code> 以及建立 <code>CaptureRequest</code>。</p>
+
+<h3 id="cameracapturesession">CameraCaptureSession</h3>
+
+<p>这是一个非常重要的API，当程序需要预览、拍照时，都需要先通过该类的实例创建<code>Session</code>。而且不管预览还是拍照，也都是由该对象的方法进行控制的，其中控制预览的方法为<code>setRepeatingRequest()</code>；控制拍照的方法为<code>capture()</code>。
+为了监听<code>CameraCaptureSession</code>的创建过程，以及监听<code>CameraCaptureSession</code>的拍照过程，Camera v2 API为<code>CameraCaptureSession</code>提供了<code>StateCallback</code>、<code>CaptureCallback</code>等内部类。</p>
+
+<h3 id="camerarequest和camerarequest-builder">CameraRequest和CameraRequest.Builder</h3>
+
+<p>当程序调用<code>setRepeatingRequest()</code>方法进行预览时，或调用<code>capture()</code>方法进行拍照时，都需要传入<code>CameraRequest</code>参数。<code>CameraRequest</code>代表了一次捕获请求，用于描述捕获图片的各种参数设置，比如对焦模式、曝光模式……总之，程序需要对照片所做的各种控制，都通过<code>CameraRequest</code>参数进行设置。<code>CameraRequest.Builder</code>则负责生成<code>CameraRequest</code>对象</p>
+
+<h2 id="预览流程">预览流程</h2>
+
+<h3 id="权限与请求">权限与请求</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">  &lt;uses-permission android:name=&#34;android.permission.CAMERA&#34; /&gt;
+  &lt;uses-feature android:name=&#34;android.hardware.camera&#34; /&gt;
+  &lt;uses-feature android:name=&#34;android.hardware.camera.autofocus&#34; /&gt;
+
+  6.0以上需要动态获取    
+ requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)</pre></td></tr></table>
+</div>
+</div>
+<h3 id="开启线程">开启线程</h3>
+
+<p>可以自定义，也可以使用HandlerThread,之后传递相关callback的回调使用这个线程中的handler</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">        backgroundThread = HandlerThread(&#34;CameraBackground&#34;)
+                .apply {
+                }
+                .also { it.start() }
+        backgroundHandler = Handler(backgroundThread?.looper)</pre></td></tr></table>
+</div>
+</div>
+<p>### 获取CameraManager</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">     val manager = activity!!.getSystemService(Context.CAMERA_SERVICE) as CameraManager</pre></td></tr></table>
+</div>
+</div>
+<p>###  获取CameraCharacteristics
+ 根据获取<code>CameraManager</code>中的<code>cameraIdList</code>获取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> for (cameraId in manager.cameraIdList) {
+    // 获取摄像头特性
+    val characteristics = manager.getCameraCharacteristics(cameraId)
+    、、、</pre></td></tr></table>
+</div>
+</div>
+<p>### 设置输出尺寸大小</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">  private fun chooseOptimalSize(choices: Array&lt;Size&gt;, textureViewWidth: Int,
+                textureViewHeight: Int, maxWidth: Int, maxHeight: Int, aspectRatio: Size): Size {
+            val bigEnoungh = ArrayList&lt;Size&gt;()
+            val notBigEnough = ArrayList&lt;Size&gt;()
+            val w = aspectRatio.width
+            val h = aspectRatio.height
+            // 找到最适合的分辨率
+            for (option in choices) {
+                // 如果满足输出的尺寸小于等于最大尺寸，并且宽高比等于aspectRatio的宽高比
+                if (option.width &lt;= maxWidth &amp;&amp; option.height &lt;= maxHeight &amp;&amp; option.height == option.width * h / w) {
+                    if (option.width &gt;= textureViewWidth &amp;&amp; option.height &gt;= textureViewHeight) { // option的比view较大
+                        bigEnoungh.add(option)
+                    } else { // option的比view尺寸小
+                        notBigEnough.add(option)
+                    }
+                }
+            }
+
+            return when {
+                // 优先bigEnoungh的最小尺寸 , 目的是为了接近view的尺寸
+                bigEnoungh.size &gt; 0 -&gt; Collections.min(bigEnoungh, CompareSizesByArea())
+                // 然后输出notBigEnough的最大尺寸,目的是为了接近view的尺寸
+                notBigEnough.size &gt; 0 -&gt; Collections.max(notBigEnough, CompareSizesByArea())
+                else -&gt; {
+                    Log.e(TAG, &#34;Couldn&#39;t find any suitable preview size&#34;)
+                    choices[0]
+                }
+            }
+        }</pre></td></tr></table>
+</div>
+</div>
+<p>###  打开摄像头</p>
+
+<p>这里有个CameraDevice.StateCallback(),以及handler回调</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">          manager.openCamera(cameraId, stateCallback, backgroundHandler)</pre></td></tr></table>
+</div>
+</div>
+<p>CameraDevice.StateCallback()</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private val stateCallback = object : CameraDevice.StateCallback() {
+
+        override fun onOpened(cameraDevice: CameraDevice) {
+            cameraOpenCloseLock.release()
+            this@Camera2BasicFragment.cameraDevice = cameraDevice
+            // 如果打开了，则创建session
+            createCameraPreviewSession()
+        }
+
+        override fun onDisconnected(cameraDevice: CameraDevice) {
+            cameraOpenCloseLock.release()
+            cameraDevice.close()
+            this@Camera2BasicFragment.cameraDevice = null
+        }
+
+        override fun onError(cameraDevice: CameraDevice, error: Int) {
+            onDisconnected(cameraDevice)
+            this@Camera2BasicFragment.activity?.finish()
+        }</pre></td></tr></table>
+</div>
+</div>
+<p>### 创建Session</p>
+
+<p>先创建CaptureRequestBuilder，并且绑定Surface，然后调用createCaptureSession方法  CameraCaptureSession.StateCallback()，最后调用<code>setRepeatingRequest</code>方法传入CaptureRequest，handler，CameraCaptureSession.CaptureCallback()</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private fun createCameraPreviewSession() {
+        try {
+            // 初始化SurfaceTexture
+            val texture = textureView.surfaceTexture
+            // 设置高宽
+            texture.setDefaultBufferSize(previewSize.width, previewSize.height)
+            // 初始化Surface
+            val surfece = Surface(texture)
+            // 创建PREVIEW的CaptureRequestBuilder
+            previewRequestBuilder = cameraDevice!!.createCaptureRequest(
+                    CameraDevice.TEMPLATE_PREVIEW
+            )
+            // 添加目标
+            previewRequestBuilder.addTarget(surfece)
+            // createSession
+            cameraDevice?.createCaptureSession(Arrays.asList(surfece, imageReader?.surface),
+                    object : CameraCaptureSession.StateCallback() {
+                        override fun onConfigureFailed(session: CameraCaptureSession?) {
+                            activity!!.showToast(&#34;Failed&#34;)
+                        }
+
+                        override fun onConfigured(session: CameraCaptureSession?) {
+                            cameraDevice ?: return
+
+                            captureSession = session
+                            try {
+                                // 预览时自动对焦
+                                previewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
+                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+                                // 是否设置自动闪光
+                                setAutoFlash(previewRequestBuilder)
+
+                                // 预览view
+                                previewRequest = previewRequestBuilder.build()
+                                // 该方法注意CameraCaptureSession.CaptureCallback()
+                                captureSession?.setRepeatingRequest(previewRequest,
+                                        captureCallback, backgroundHandler)
+                            } catch (e: CameraAccessException) {
+                                Log.e(TAG, e.toString())
+                            }
+                        }
+                    }, null)
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, e.toString())
+        }
+    }    </pre></td></tr></table>
+</div>
+</div>
+<h3 id="cameracapturesession-capturecallback">CameraCaptureSession.CaptureCallback()</h3>
+
+<p>这个是设置预览时的回调</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    // 在图像捕捉部分向前进度时调用; 一些（但不是全部）来自图像捕获的结果是可用的
+     override fun onCaptureProgressed(session: CameraCaptureSession,
+            request: CaptureRequest,
+            partialResult: CaptureResult) {
+    }
+    // 当图像捕捉已完全完成并且所有结果元数据可用时调用此方法
+    override fun onCaptureCompleted(session: CameraCaptureSession,
+            request: CaptureRequest,
+            result: TotalCaptureResult) {
+    }
+    // 当捕获序列在通过此侦听器返回之前CaptureResult 或之后中止时
+    override fun onCaptureSequenceAborted(session: CameraCaptureSession?, sequenceId: Int) {
+        super.onCaptureSequenceAborted(session, sequenceId)
+    }
+    // 此回调将在帧的捕捉失败时立即调用
+    override fun onCaptureFailed(session: CameraCaptureSession?, request: CaptureRequest?,
+            failure: CaptureFailure?) {
+    }
+    // 捕获序列完成并且所有CaptureResult 或CaptureFailure通过此侦听器返回时
+    override fun onCaptureSequenceCompleted(session: CameraCaptureSession?, sequenceId: Int,
+            frameNumber: Long) {
+    }
+    // 此回调将在帧的捕捉开始时立即调用
+    override fun onCaptureStarted(session: CameraCaptureSession?, request: CaptureRequest?,
+            timestamp: Long, frameNumber: Long) {
+    }
+
+    //如果捕获的单个缓冲区无法发送到目标表面，则调用此方法。
+    override fun onCaptureBufferLost(session: CameraCaptureSession?, request: CaptureRequest?,
+            target: Surface?, frameNumber: Long) {
+    }   </pre></td></tr></table>
+</div>
+</div>
+<p>## 拍照流程</p>
+
+<p>### 锁定焦点并提交图像请求</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> // 设置自动对焦模式为自动对焦
+            previewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
+                    CameraMetadata.CONTROL_AF_TRIGGER_START)
+            state = STATE_WAITING_LOCK
+            // 提交要由相机设备拍摄的图像的请求
+            captureSession?.capture(previewRequestBuilder.build(), captureCallback,
+                    backgroundHandler)</pre></td></tr></table>
+</div>
+</div>
+<h3 id="进行拍照">进行拍照</h3>
+
+<p>进行拍照前，还有一些AF,AE对应模式状态的处理，最后调用该方法用imageReader进行拍照保存图片</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">private fun captureStillPicture() {
+        try {
+            if (activity == null || cameraDevice == null) return
+            val rotation = activity!!.windowManager.defaultDisplay.rotation
+            // CameraDevice.TEMPLATE_STILL_CAPTURE 创建适合静态图像捕获的请求。具体来说，这意味着优先考虑帧速率的图像质量
+            // 把imageReader添加进去
+            val captureBuilder = cameraDevice?.createCaptureRequest(
+                    CameraDevice.TEMPLATE_STILL_CAPTURE)?.apply {
+                addTarget(imageReader?.surface)
+                // 控制jpeg的方向
+                set(CaptureRequest.JPEG_ORIENTATION,
+                        (ORIENTATIONS.get(rotation) + sensorOrientation + 270) % 360)
+                // CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE 在这种模式下，AF算法会不断修改镜头位置，以尝试提供持续聚焦的图像流
+                set(CaptureRequest.CONTROL_AF_MODE,
+                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+            }?.also { setAutoFlash(it) }
+
+            val captureCallback = object : CameraCaptureSession.CaptureCallback() {
+                override fun onCaptureCompleted(session: CameraCaptureSession?,
+                        request: CaptureRequest?, result: TotalCaptureResult?) {
+                    activity?.showToast(&#34;Saved: $file&#34;)
+                    Log.d(TAG, file.toString())
+                    // 成功后取消锁定自动对焦
+                    unlockFocus()
+                }
+            }
+            captureSession?.apply {
+                stopRepeating()
+                abortCaptures()
+                capture(captureBuilder?.build(), captureCallback, null)
+            }
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, e.toString())
+        }
+    }</pre></td></tr></table>
+</div>
+</div>
+<p>### ImageReader</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   // 读取信息Reader
+                imageReader = ImageReader.newInstance(largest.width, largest.height,
+                        ImageFormat.JPEG, 2).apply {
+                    setOnImageAvailableListener(onImageAvailableListener, backgroundHandler)
+                }
+
+
+   private val onImageAvailableListener = ImageReader.OnImageAvailableListener {
+    backgroundHandler?.post(ImageSaver(it.acquireLatestImage(), file))
+}   </pre></td></tr></table>
+</div>
+</div>
+<p>## 录制流程</p>
+
+<p>录制使用MediaRecorder进行录制</p>
+
+<p>### 设置MediaRecorder</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   // 设置方向 
+  val rotation = cameraActivity.windowManager.defaultDisplay.rotation
+        when (sensorOrientation) {
+            SENSOR_ORIENTATION_DEFAULT_DEGREES -&gt;
+                mediaRecorder?.setOrientationHint(DEFAULT_ORIENTATIONS.get(rotation))
+            SENSOR_ORIENTATION_INVERSE_DEGREES -&gt;
+                mediaRecorder?.setOrientationHint(INVERSE_ORIENTATIONS.get(rotation))
+        }
+  mediaRecorder?.apply {
+            // 设置音频来源为MIC
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            // 设置视频来源为SURFACE
+            setVideoSource(MediaRecorder.VideoSource.SURFACE)
+            // 设置输出格式为OutputFormat.MPEG_4
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            // 设置输出文件夹
+            setOutputFile(nextVideoAbsolutePath)
+            // 设置码率
+            setVideoEncodingBitRate(10000000)
+            // 设置帧率
+            setVideoFrameRate(30)
+            // 设置大小
+            setVideoSize(videoSize.width, videoSize.height)
+            // 设置编码器为H264
+            setVideoEncoder(MediaRecorder.VideoEncoder.H264)
+            // 设置音频编码器为ACC
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            prepare()
+        }</pre></td></tr></table>
+</div>
+</div>
+<p>### 启用录制</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">closePreviewSession()
+setUpMediaRecorder()
+val texture = textureView.surfaceTexture.apply {
+            setDefaultBufferSize(previewSize.width, previewSize.height)
+        }
+
+        // Set up Surface for camera preview and MediaRecorder
+        val previewSurface = Surface(texture)
+        val recorderSurface = mediaRecorder!!.surface
+        val surfaces = ArrayList&lt;Surface&gt;().apply {
+            add(previewSurface)
+            add(recorderSurface)
+        }
+        previewRequestBuilder = cameraDevice!!.createCaptureRequest(TEMPLATE_RECORD).apply {
+            addTarget(previewSurface)
+            addTarget(recorderSurface)
+        }
+
+        // Start a capture session
+        // Once the session starts, we can update the UI and start recording
+        cameraDevice?.createCaptureSession(surfaces,
+                object : CameraCaptureSession.StateCallback() {
+
+                    override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
+                        captureSession = cameraCaptureSession
+                        updatePreview()
+                        activity?.runOnUiThread {
+                            videoButton.setText(R.string.stop)
+                            isRecordingVideo = true
+                            mediaRecorder?.start()
+                        }
+                    }
+
+                    override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
+                        if (activity != null) showToast(&#34;Failed&#34;)
+                    }
+                }, backgroundHandler)</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E7%B1%BB/">类</a>
+          
+          <a href="/xjr99721/tags/%E5%A4%9A%E5%AA%92%E4%BD%93/">多媒体</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/file%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">File存储目录</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/camera1/">
+            <span class="next-text nav-default">Camera1类</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

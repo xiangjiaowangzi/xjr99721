@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Semaphore类 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="Semaphore字面意思是信号量。他主要用于控制有限的资源的访问数量。 场景： 一个厕所只有3个坑位，但是有10个人来上厕所，那怎么办？假设1" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/samaphore%E4%BB%8B%E7%BB%8D/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Semaphore类" />
+<meta property="og:description" content="Semaphore字面意思是信号量。他主要用于控制有限的资源的访问数量。 场景： 一个厕所只有3个坑位，但是有10个人来上厕所，那怎么办？假设1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/samaphore%E4%BB%8B%E7%BB%8D/" />
+
+
+
+<meta property="article:published_time" content="2018-03-19T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-03-19T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Semaphore类">
+<meta itemprop="description" content="Semaphore字面意思是信号量。他主要用于控制有限的资源的访问数量。 场景： 一个厕所只有3个坑位，但是有10个人来上厕所，那怎么办？假设1">
+
+
+<meta itemprop="datePublished" content="2018-03-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-03-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1500">
+
+
+
+<meta itemprop="keywords" content="并发,类," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Semaphore类"/>
+<meta name="twitter:description" content="Semaphore字面意思是信号量。他主要用于控制有限的资源的访问数量。 场景： 一个厕所只有3个坑位，但是有10个人来上厕所，那怎么办？假设1"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Semaphore类</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-19 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/java/"> Java </a>
+            
+              <a href="/xjr99721/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1500 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#基本函数">基本函数</a>
+<ul>
+<li><a href="#构造函数">构造函数</a></li>
+<li><a href="#acquire函数">acquire函数</a></li>
+<li><a href="#acquireuninterruptibly函数">acquireUninterruptibly函数</a></li>
+<li><a href="#tryacquire函数">tryAcquire函数</a></li>
+<li><a href="#release函数">release函数</a></li>
+<li><a href="#availablepermits函数">availablePermits函数</a></li>
+<li><a href="#drainpermits函数">drainPermits函数</a></li>
+<li><a href="#reducepermits函数">reducePermits函数</a></li>
+<li><a href="#isfair函数">isFair函数</a></li>
+<li><a href="#hasqueuedthreads函数">hasQueuedThreads函数</a></li>
+<li><a href="#getqueuelength函数">getQueueLength函数</a></li>
+<li><a href="#getqueuedthreads函数">getQueuedThreads函数</a></li>
+</ul></li>
+<li><a href="#demo">demo</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>Semaphore字面意思是信号量。他主要用于控制有限的资源的访问数量。</p>
+
+<p>场景：</p>
+
+<blockquote>
+<p>一个厕所只有3个坑位，但是有10个人来上厕所，那怎么办？假设10的人的编号分别为1-10，并且1号先到厕所，10号最后到厕所。那么1-3号来的时候必然有可用坑位，顺利如厕，4号来的时候需要看看前面3人是否有人出来了，如果有人出来，进去，否则等待。同样的道理，4-10号也需要等待正在上厕所的人出来后才能进去，并且谁先进去这得看等待的人是否有素质，是否能遵守先来先上的规则。</p>
+</blockquote>
+
+<h2 id="基本函数">基本函数</h2>
+
+<h3 id="构造函数">构造函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public Semaphore(int permits)
+public Semaphore(int permits, boolean fair)</pre></td></tr></table>
+</div>
+</div>
+<p>permits 代表可用资源数量 ，fair代表是否先来先用</p>
+
+<h3 id="acquire函数">acquire函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public void acquire() throws InterruptedException 
+public void acquire(int permits) throws InterruptedException    </pre></td></tr></table>
+</div>
+</div>
+<p>用来申请permits个资源，没有则为1，如果没有那么多资源，则阻塞线程，若被打断，抛出InterruptedException异常</p>
+
+<h3 id="acquireuninterruptibly函数">acquireUninterruptibly函数</h3>
+
+<p>与上类似，只不过就算线程在申请资源过程中被打断，依然会继续申请，获取资源的时间可能会有所变化。</p>
+
+<h3 id="tryacquire函数">tryAcquire函数</h3>
+
+<p>tryAcquire函数用来获取可用资源，但是这类函数能够有时间的限制，如果超时，立即返回，有几种类型的函数，签名分别如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public boolean tryAcquire()
+public boolean tryAcquire(long timeout, TimeUnit unit)
+        throws InterruptedException
+public boolean tryAcquire(int permits)
+public boolean tryAcquire(int permits, long timeout, TimeUnit unit)
+        throws InterruptedException</pre></td></tr></table>
+</div>
+</div>
+<p>1.第一个函数用来申请一个资源，如果当前有可用资源，立即返回true，否则立即返回false；<br />
+2.第二个函数用来申请一个资源，指定一个超时时间，如果当前可以资源数量足够，立即返回true，否则最多等待给定的时间，如果时间到还是未能获取资源，则返回false；如果等待过程中线程被打断，抛出InterruptedException异常；<br />
+3.和1一样，只是申请permits个资源<br />
+4.和2一样，只是申请permits个资源</p>
+
+<h3 id="release函数">release函数</h3>
+
+<p>释放资源</p>
+
+<h3 id="availablepermits函数">availablePermits函数</h3>
+
+<p>用来获取当前可用的资源数量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public int availablePermits()</pre></td></tr></table>
+</div>
+</div>
+<h3 id="drainpermits函数">drainPermits函数</h3>
+
+<p>用来申请当前所有可用的资源</p>
+
+<h3 id="reducepermits函数">reducePermits函数</h3>
+
+<p>用来禁止某些资源不可用</p>
+
+<h3 id="isfair函数">isFair函数</h3>
+
+<p>用来判断当前的信号量是采用什么类型的策略</p>
+
+<h3 id="hasqueuedthreads函数">hasQueuedThreads函数</h3>
+
+<p>判断是否有现成正在等待申请资源</p>
+
+<h3 id="getqueuelength函数">getQueueLength函数</h3>
+
+<p>返回正在等待申请资源的线程的数量</p>
+
+<h3 id="getqueuedthreads函数">getQueuedThreads函数</h3>
+
+<p>返回当前正在等待申请资源的线程集合</p>
+
+<h2 id="demo">demo</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">public class TestSemaphore {
+    public static void main(String[] args) throws Exception {
+        Semaphore wc = new Semaphore(3, true); // 3个坑位
+        for (int i = 1; i &lt;= 6; i++) {
+            Thread t = new Thread(new Person(&#34;第&#34; + i + &#34;个人&#34;, wc));
+            t.start();
+            Thread.sleep(new Random().nextInt(300));
+        }
+    }
+
+    static class Person implements Runnable {
+        private String name;
+        private Semaphore wc;
+
+        public Person(String name, Semaphore wc) {
+            this.name = name;
+            this.wc = wc;
+        }
+
+        public void run() {
+            System.out.print(name + &#34;：憋死老子了!&#34;);
+            if (wc.availablePermits() &gt; 0) {
+                System.out.println(&#34;天助我也，有坑位！&#34;);
+            } else {
+                System.out.println(&#34;卧槽，没坑位了，等会儿吧...&#34;);
+            }
+            try {
+                wc.acquire(); //申请坑位
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(name + &#34;：终于轮到我了，拉屎就是爽！&#34;);
+            try {
+                Thread.sleep(new Random().nextInt(1000)); // 模拟上厕所时间。
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(name + &#34;：拉完了，好臭!&#34;);
+            wc.release();
+        }
+    }
+}
+
+结果：
+
+第1个人：憋死老子了!天助我也，有坑位！ 
+第1个人：终于轮到我了，拉屎就是爽！ 
+第2个人：憋死老子了!天助我也，有坑位！ 
+第2个人：终于轮到我了，拉屎就是爽！ 
+第3个人：憋死老子了!天助我也，有坑位！ 
+第3个人：终于轮到我了，拉屎就是爽！ 
+第3个人：拉完了，好臭! 
+第4个人：憋死老子了!天助我也，有坑位！ 
+第4个人：终于轮到我了，拉屎就是爽！ 
+第5个人：憋死老子了!卧槽，没坑位了，等会儿吧… 
+第6个人：憋死老子了!卧槽，没坑位了，等会儿吧… 
+第2个人：拉完了，好臭! 
+第5个人：终于轮到我了，拉屎就是爽！ 
+第4个人：拉完了，好臭! 
+第6个人：终于轮到我了，拉屎就是爽！ 
+第1个人：拉完了，好臭! 
+第6个人：拉完了，好臭! 
+第5个人：拉完了，好臭!</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+          
+          <a href="/xjr99721/tags/%E7%B1%BB/">类</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/camera1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Camera1类</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/countdownlatch%E4%B8%8Ejoin%E7%9A%84%E5%8C%BA%E5%88%AB/">
+            <span class="next-text nav-default">CountDownLatch与Join的区别</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

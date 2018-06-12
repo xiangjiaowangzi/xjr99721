@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Image的scaleType属性 - xjr99721的笔记</title>
+  <link rel="alternate" hreflang="en" href="https://xiangjiaowangzi.github.io/xjr99721/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="xjr99721" />
+  <meta name="description" content="Image的scaleType属性 开始布局 ![图片]() ScaleType.FIT_CENTER 默认 图片会被等比缩放到能够填充控件大小，并居中展示： ScaleType.FIT_START 图片等比缩放到控件大小，并放" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://xiangjiaowangzi.github.io/xjr99721/post/image%E7%9A%84scaaletype%E5%B1%9E%E6%80%A7/" />
+
+
+
+<link rel="icon" href="/xjr99721/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/xjr99721/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Image的scaleType属性" />
+<meta property="og:description" content="Image的scaleType属性 开始布局 ![图片]() ScaleType.FIT_CENTER 默认 图片会被等比缩放到能够填充控件大小，并居中展示： ScaleType.FIT_START 图片等比缩放到控件大小，并放" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiangjiaowangzi.github.io/xjr99721/post/image%E7%9A%84scaaletype%E5%B1%9E%E6%80%A7/" />
+
+
+
+<meta property="article:published_time" content="2017-08-28T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-08-28T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Image的scaleType属性">
+<meta itemprop="description" content="Image的scaleType属性 开始布局 ![图片]() ScaleType.FIT_CENTER 默认 图片会被等比缩放到能够填充控件大小，并居中展示： ScaleType.FIT_START 图片等比缩放到控件大小，并放">
+
+
+<meta itemprop="datePublished" content="2017-08-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-08-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="402">
+
+
+
+<meta itemprop="keywords" content="View," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Image的scaleType属性"/>
+<meta name="twitter:description" content="Image的scaleType属性 开始布局 ![图片]() ScaleType.FIT_CENTER 默认 图片会被等比缩放到能够填充控件大小，并居中展示： ScaleType.FIT_START 图片等比缩放到控件大小，并放"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/xjr99721/" class="logo">xjr99721</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/xjr99721/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/xjr99721/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/xjr99721/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/xjr99721/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/xjr99721/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/xjr99721/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/xjr99721/" class="logo">
+    
+      xjr99721
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/">主页</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://xiangjiaowangzi.github.io/xjr99721/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Image的scaleType属性</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2017-08-28 </span>
+        <div class="post-category">
+            
+              <a href="/xjr99721/categories/android/"> Android </a>
+            
+              <a href="/xjr99721/categories/java/"> Java </a>
+            
+              <a href="/xjr99721/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+            
+          </div>
+        <span class="more-meta"> 约 402 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#image的scaletype属性">Image的scaleType属性</a>
+<ul>
+<li>
+<ul>
+<li><a href="#scaletype-fit-center-默认">ScaleType.FIT_CENTER 默认</a></li>
+<li><a href="#scaletype-fit-start">ScaleType.FIT_START</a></li>
+<li><a href="#scaletype-fit-end">ScaleType.FIT_END</a></li>
+<li><a href="#scaletype-fit-xy">ScaleType.FIT_XY</a></li>
+<li><a href="#scaletype-center">ScaleType.CENTER</a></li>
+<li><a href="#scaletype-center-crop">ScaleType.CENTER_CROP</a></li>
+<li><a href="#scaletype-center-inside">ScaleType.CENTER_INSIDE</a></li>
+<li><a href="#scaletype-matrix">ScaleType.MATRIX</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="image的scaletype属性">Image的scaleType属性</h1>
+
+<p>开始布局</p>
+
+<p>![图片]()</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/677256-8868b6a8a939c8ee.png?imageMogr2/auto-orient/" alt="基本布局" /></p>
+
+<h3 id="scaletype-fit-center-默认">ScaleType.FIT_CENTER 默认</h3>
+
+<p>图片会被等比缩放到能够填充控件大小，并居中展示：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/677256-cd9bbae27e0cb53d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/483" alt="图片" /></p>
+
+<h3 id="scaletype-fit-start">ScaleType.FIT_START</h3>
+
+<p>图片等比缩放到控件大小，并放置在控件的上边或左边展示：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/677256-7358abe2b7172ad9.png?imageMogr2/auto-orient/" alt="图片" /></p>
+
+<h3 id="scaletype-fit-end">ScaleType.FIT_END</h3>
+
+<p>图片等比缩放到控件大小，并放置在控件的下边或右边展示：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/677256-74fcb14831af09a5.png?imageMogr2/auto-orient/" alt="图片" /></p>
+
+<h3 id="scaletype-fit-xy">ScaleType.FIT_XY</h3>
+
+<p>图片缩放到控件大小，完全填充控件大小展示：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/677256-35a3c55b8f4982b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/483" alt="图片" /></p>
+
+<h3 id="scaletype-center">ScaleType.CENTER</h3>
+
+<p>不使用缩放，ImageView会展示图片的中心部分，即图片的中心点和ImageView的中心点重叠，如图。如果图片的大小小于控件的宽高，那么图片会被居中显示。</p>
+
+<h3 id="scaletype-center-crop">ScaleType.CENTER_CROP</h3>
+
+<p>常用这种，图片会被等比缩放直到完全填充整个ImageView，并居中显示 宽高&gt;=ImageView的宽高</p>
+
+<h3 id="scaletype-center-inside">ScaleType.CENTER_INSIDE</h3>
+
+<p>图片将被等比缩放到能够完整展示在ImageView中并居中，如果图片大小小于控件大小，那么就直接居中展示该图片 宽高&lt;=ImageView的宽高</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/677256-26801522a909afce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/483" alt="图片" /></p>
+
+<h3 id="scaletype-matrix">ScaleType.MATRIX</h3>
+
+<p>该模式需要与ImageView.setImageMatrix(Matrix matrix) 配合使用，因为该模式需要用于指定一个变换矩阵用于指定图片如何展示</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/xjr99721/tags/view/">View</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/xjr99721/post/%E7%AB%AF%E5%A4%96%E6%8E%A8%E9%80%81/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">端外推送</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/xjr99721/post/kotlin%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/">
+            <span class="next-text nav-default">Kotlin函数</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="245498365@qq.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/xiangjiaowangzi" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://xiangjiaowangzi.github.io/xjr99721/index.xml" rel="noopener" type="application/rss+xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">xjr99721</span></span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/xjr99721/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/xjr99721/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/xjr99721/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/xjr99721/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/xjr99721/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

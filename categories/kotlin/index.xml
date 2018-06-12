@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kotlin on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/categories/kotlin/</link>
+    <description>Recent content in Kotlin on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 28 Aug 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/categories/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kotlin函数</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/kotlin%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Mon, 28 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/kotlin%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</guid>
+      <description>懒加载 lateinit 懒加载，则用于只能生命周期流程中进行获取或者初始化的变量，比如 Android 的 onCreate()，修饰var lazy函数 1 public fun &amp;lt;T&amp;gt; lazy(initializer: () -&amp;gt; T): Lazy&amp;lt;T&amp;gt; = SynchronizedLazyImpl(initializer)</description>
+    </item>
+    
+  </channel>
+</rss>

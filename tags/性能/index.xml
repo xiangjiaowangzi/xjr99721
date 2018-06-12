@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>性能 on xjr99721的笔记</title>
+    <link>https://xiangjiaowangzi.github.io/xjr99721/tags/%E6%80%A7%E8%83%BD/</link>
+    <description>Recent content in 性能 on xjr99721的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 19 Dec 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xiangjiaowangzi.github.io/xjr99721/tags/%E6%80%A7%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android性能优化</title>
+      <link>https://xiangjiaowangzi.github.io/xjr99721/post/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Tue, 19 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiangjiaowangzi.github.io/xjr99721/post/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E7%BB%93/</guid>
+      <description>本文从电量，内存，界面，网络，图片，线程等方面进行记录优化小结 电量优化 工具检测 电量优化可以使用 Battery Historian工具 耗电因素 屏幕：每次锁屏</description>
+    </item>
+    
+  </channel>
+</rss>
